@@ -1,9 +1,10 @@
 import { render } from '../render.js';
 import Point from '../view/point.js';
 import SortList from '../view/sort-list.js';
-import TripListView from '../view/trip-list';
-import NewPoint from '../view/new-point.js';
+import TripListView from '../view/trip-list.js';
+// import NewPointView from '../view/new-point.js';
 import EditPoint from '../view/edit-point.js';
+import EmptyList from '../view/empty-list.js';
 
 export default class BoardPresenter {
   eventsList = new TripListView();
@@ -15,10 +16,14 @@ export default class BoardPresenter {
 
     render(new SortList(), this.boardContainer);
     render(this.eventsList, this.boardContainer);
-    render(new NewPoint(this.boardPoints[1]), this.eventsList.element);
+    // render(new NewPointView(this.boardPoints[1]), this.eventsList.element);
 
-    for (let i = 0; i < this.boardPoints.length; i++) {
-      this.#renderPoint(this.boardPoints[i]);
+    if (this.boardPoints.every((point) => point.isArchive)) {
+      render(new EmptyList(), this.eventsList.element);
+    } else {
+      for (let i = 0; i < this.boardPoints.length; i++) {
+        this.#renderPoint(this.boardPoints[i]);
+      }
     }
   };
 

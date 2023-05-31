@@ -52,9 +52,13 @@ export default class Point {
     this.point = point;
   }
 
+  get template() {
+    return createPointsTemplate(this.point);
+  }
+
   get element() {
     if (!this.#element) {
-      this.#element = createElement(createPointsTemplate(this.point));
+      this.#element = createElement(this.template);
     }
 
     return this.#element;
