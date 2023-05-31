@@ -11,18 +11,20 @@ const filterList = document.querySelector('.trip-controls__filters');
 export default class BoardPresenter {
   eventsList = new TripList();
 
-  init = (boardContainer) => {
+  init = (boardContainer, pointsModel) => {
     this.boardContainer = boardContainer;
-
+    this.pointsModel = pointsModel;
+    this.boardPoints = this.pointsModel.getPoints();
 
     render(new FilterList(), filterList);
     render(new SortList(), this.boardContainer);
     render(this.eventsList, this.boardContainer);
-    render(new EditPoint, this.eventsList.getElement());
-    render(new NewPoint(), this.eventsList.getElement());
+    render(new EditPoint(this.boardPoints[0]), this.eventsList.getElement());
+    render(new NewPoint(this.boardPoints[1]), this.eventsList.getElement());
 
     for (let i = 0; i < 3; i++) {
-      render(new Point(), this.eventsList.getElement());
+      render(new Point(this.boardPoints[i]), this.eventsList.getElement());
     }
+
   };
 }
