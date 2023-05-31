@@ -2,7 +2,7 @@ import { getOffers } from '../mock/offers.js';
 import { destinations, generatePoint } from '../mock/point.js';
 
 export default class PointModel {
-  points = Array.from({ length: 3 }, generatePoint);
+  #points = Array.from({ length: 5 }, generatePoint);
   offers = getOffers();
 
   getPoint = (point) => {
@@ -17,5 +17,7 @@ export default class PointModel {
     };
   };
 
-  getPoints = () => this.points.map((point) => this.getPoint(point));
+  get points() {
+    return this.#points.map((point) => this.getPoint(point));
+  }
 }

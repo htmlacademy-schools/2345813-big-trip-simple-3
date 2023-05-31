@@ -45,22 +45,22 @@ const createPointsTemplate = (point) => {
   `);
 };
 
-
 export default class Point {
+  #element = null;
 
   constructor(point) {
     this.point = point;
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(createPointsTemplate(this.point));
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(createPointsTemplate(this.point));
     }
 
-    return this.element;
+    return this.#element;
   }
 
   removeElement() {
-    this.element = null;
+    this.#element = null;
   }
 }
