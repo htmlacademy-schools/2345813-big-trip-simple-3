@@ -56,6 +56,7 @@ export default class BoardPresenter {
       evt.preventDefaul();
       replaceEditFormToPoint();
     });
+
     render(pointComponent, this.eventsList.element);
   };
 }
