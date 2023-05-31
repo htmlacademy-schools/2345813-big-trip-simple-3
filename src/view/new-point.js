@@ -149,7 +149,6 @@ export default class NewPoint {
     this.point = point;
   }
 
-
   get element() {
     if (!this.#element) {
       this.#element = createElement(createNewPointTemplate(this.point));
