@@ -4,12 +4,12 @@ import { cities } from '../mock/point.js';
 import { getOffers } from '../mock/offers.js';
 import { pointType } from '../mock/point.js';
 
-const offerTemplate = (title, price, checked) => (
+const offerTemplate = (id, title, price, checked) => (
   `
   <div class="event__offer-selector">
-    <input class="event__offer-checkbox  visually-hidden" id="event-offer-luggage-1" type="checkbox" name="event-offer-luggage" ${checked}>
+    <input class="event__offer-checkbox  visually-hidden" id="event-offer-${title}-${id}" type="checkbox" name="event-offer-${title}" ${checked}>
 
-    <label class="event__offer-label" for="event-offer-luggage-1">
+    <label class="event__offer-label" for="event-offer-${title}-${id}">
       <span class="event__offer-title">${title}</span>
       &plus;&euro;&nbsp;
       <span class="event__offer-price">${price}</span>
@@ -18,20 +18,9 @@ const offerTemplate = (title, price, checked) => (
   `
 );
 
-const getAllOffersId = (type, offersInner) => {
+const getAllOffersId = (type) => {
   const listOfAllOffers = getOffers().find((offer) => offer.type === type).offers;
-
-  let checked = null;
-  const finalListOfOffers = [];
-
-  for (let i = 0; i < listOfAllOffers.length; i++) {
-    if (offersInner[i]) {
-      checked = listOfAllOffers[i].id === offersInner[i].id ? 'checked' : '';
-    } else {
-      checked = '';
-    }
-    finalListOfOffers.push(offerTemplate(listOfAllOffers[i].title, listOfAllOffers[i].price, checked));
-  }
+  const finalListOfOffers = listOfAllOffers.length ? listOfAllOffers.map((offer) => offerTemplate(offer.id, offer.title, offer.price)) : listOfAllOffers;
   return finalListOfOffers.join('');
 };
 
@@ -154,19 +143,22 @@ const createNewPointTemplate = (point) => {
 };
 
 export default class NewPoint {
+  #element = null;
+
   constructor(point) {
     this.point = point;
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(createNewPointTemplate(this.point));
+
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(createNewPointTemplate(this.point));
     }
 
-    return this.element;
+    return this.#element;
   }
 
   removeElement() {
-    this.element = null;
+    this.#element = null;
   }
 }

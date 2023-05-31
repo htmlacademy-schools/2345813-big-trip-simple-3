@@ -1,8 +1,8 @@
 const POINT_TYPES = [
   {
     id: 1,
-    type: '2',
-    label: '3'
+    type: 'bus',
+    label: 'label'
   }
 ];
 
