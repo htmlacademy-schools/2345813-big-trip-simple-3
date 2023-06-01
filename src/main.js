@@ -2,7 +2,7 @@ import FiltersView from './view/filter-list.js';
 import {render} from './framework/render.js';
 import BoardPresenter from './presenter/presenter.js';
 import PointModel from './model/point-model.js';
-import {generateFilter} from './mock/filter.js';
+import {generateFilter} from './utils/filter.js';
 
 const tripEventsSection = document.querySelector('.trip-events');
 const tripControlsFilters = document.querySelector('.trip-controls__filters');

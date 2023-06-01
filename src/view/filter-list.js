@@ -24,7 +24,7 @@ const createFiltersTemplate = (filters) => {
     `);
 };
 
-export default class FilterList extends AbstractView {
+export default class FiltersList extends AbstractView {
   constructor(filters) {
     super();
     this.filters = filters;
