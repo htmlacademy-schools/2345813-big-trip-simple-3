@@ -1,43 +1,44 @@
-import AbstractView from '../framework/view/abstract-view.js';
-import { SortType } from '../utils/sort-module.js';
+import RadioGroupView, {html} from './radio-group-view.js';
 
-const oneSortElement = (sortTypeItem, checkedInner = '') => (
-  `
-    <div class="trip-sort__item  trip-sort__item--${sortTypeItem}">
-      <input id="sort-${sortTypeItem}" class="trip-sort__input  visually-hidden" type="radio" name="trip-sort" value="sort-${sortTypeItem}" ${checkedInner}>
-      <label class="trip-sort__btn" for="sort-${sortTypeItem}" data-sort-type="${sortTypeItem}">${sortTypeItem}</label>
-    </div>
-  `
-);
-
-const createSortTemplate = () => (
-  `
-    <form class="trip-events__trip-sort  trip-sort" action="#" method="get">
-      ${oneSortElement(SortType.DAY, 'checked')}
-      ${oneSortElement(SortType.EVENT)}
-      ${oneSortElement(SortType.TIME)}
-      ${oneSortElement(SortType.PRICE)}
-      ${oneSortElement(SortType.OFFERS)}
-    </form>
-  `
-);
-
-export default class SortView extends AbstractView{
-  get template() {
-    return createSortTemplate();
+export default class SortView extends RadioGroupView {
+  /**
+   * @override
+   */
+  createTemplate() {
+    return html`
+      <form class="trip-events__trip-sort  trip-sort" action="#" method="get">
+      </form>
+    `;
   }
 
-  setSortTypeChangeHandler = (callback) => {
-    this._callback.sortTypeChange = callback;
-    this.element.addEventListener('click', this.#sortTypeChangeHandler);
-  };
+  createOptionTemplate(label, value) {
+    return html`
+      <div class="trip-sort__item trip-sort__item--${value}">
+        <input
+          id="sort-${value}"
+          class="trip-sort__input  visually-hidden"
+          type="radio"
+          name="trip-sort"
+          value="${value}"
+        >
+        <label class="trip-sort__btn" for="sort-${value}">
+          ${label}
+        </label>
+      </div>
+    `;
+  }
 
-  #sortTypeChangeHandler = (evt) => {
-    if (evt.target.tagName !== 'LABEL') {
-      return;
-    }
-    evt.preventDefault();
-    this._callback.sortTypeChange(evt.target.dataset.sortType);
-    evt.target.parentNode.firstElementChild.checked = true;
-  };
+
+  /**
+   * @param {[string, string][]} states
+   */
+  setOptions(states) {
+    const templates = states.map((state) => this.createOptionTemplate(...state));
+
+    this.querySelector('form').innerHTML = templates.join('');
+
+    return this;
+  }
 }
+
+customElements.define(String(SortView), SortView);
