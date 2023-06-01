@@ -1,5 +1,5 @@
-import Point from '../view/point.js';
-import EditPoint from '../view/edit-point.js';
+import PointsView from '../view/point-view.js';
+import EditPointView from '../view/edit-point-view.js';
 import { remove, render, replace } from '../framework/render.js';
 
 const mode = {
@@ -31,8 +31,8 @@ export default class PointPresenter {
     const prevPointComponent = this.#pointComponent;
     const prevEditPointComponent = this.#editPointComponent;
 
-    this.#pointComponent = new Point(point);
-    this.#editPointComponent = new EditPoint(point);
+    this.#pointComponent = new PointsView(point);
+    this.#editPointComponent = new EditPointView(point);
 
     this.#pointComponent.setPointClickHandler(() => {
       this.#replacePointToEditForm();
