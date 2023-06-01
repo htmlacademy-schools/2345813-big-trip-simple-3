@@ -13,11 +13,11 @@ export default class CreateButtonPresenter extends Presenter {
   constructor(...args) {
     super(...args);
 
-    this.view.addEventListener('click', this.onClick.bind(this));
+    this.view.addEventListener('click', this.onViewClick.bind(this));
     this.model.addEventListener('mode', this.onModeChange.bind(this));
   }
 
-  onClick() {
+  onViewClick() {
     this.model.setMode(Mode.CREATE);
   }
 

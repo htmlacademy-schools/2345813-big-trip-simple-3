@@ -1,9 +1,13 @@
+import Mode from '../enum/mode.js';
 import PointType from '../enum/point-type.js';
 import PointLabel from '../enum/point-label.js';
-import DateFormat from '../enum/date-format.js';
 import Presenter from './presenter.js';
-import { formatDate } from '../utils.js';
-import Mode from '../enum/mode.js';
+import { formatDate, formatNumber } from '../format.js';
+
+const DateFormat = {
+  TIME: 'HH:mm',
+  CALENDAR_DATE: 'MMM D'
+};
 
 /**
  * @template {ApplicationModel} Model
@@ -17,7 +21,7 @@ export default class ListPresenter extends Presenter {
   constructor(...args) {
     super(...args);
 
-    this.model.points.addEventListener(
+    this.model.pointsModel.addEventListener(
       ['add', 'update', 'remove', 'filter', 'sort'],
       this.onModelPointsChange.bind(this)
     );
@@ -27,14 +31,14 @@ export default class ListPresenter extends Presenter {
   }
 
   updateView() {
-    const points = this.model.points.list();
+    const points = this.model.pointsModel.list();
 
     const states = points.map((point) => {
       const {startDate, endDate} = point;
-      const destination = this.model.destinations.findById(point.destinationId);
+      const destination = this.model.destinationsModel.findById(point.destinationId);
       const typeLabel = PointLabel[PointType.findKey(point.type)];
       const title = `${typeLabel} ${destination.name}`;
-      const offerGroup = this.model.offerGroups.findById(point.type);
+      const offerGroup = this.model.offerGroupsModel.findById(point.type);
 
       const offerStates = offerGroup.items.reduce((result, offer) => {
         if (point.offerIds.includes(offer.id)) {
@@ -53,7 +57,7 @@ export default class ListPresenter extends Presenter {
         startDate: formatDate(startDate, DateFormat.CALENDAR_DATE),
         startTime: formatDate(startDate, DateFormat.TIME),
         endTime: formatDate(endDate, DateFormat.TIME),
-        price: String(point.basePrice),
+        price: formatNumber(point.basePrice),
         offers: offerStates
       };
     });
@@ -61,16 +65,7 @@ export default class ListPresenter extends Presenter {
     this.view.setPoints(states);
   }
 
-  // /**
-  //  * @param {CollectionModelEvent<PointAdapter>} event
-  //  */
   onModelPointsChange() {
-    // if (event.type === 'remove') {
-    //   this.view.findById(event.detail.id).remove();
-
-    //   return;
-    // }
-
     this.updateView();
   }
 

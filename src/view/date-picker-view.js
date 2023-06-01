@@ -10,11 +10,7 @@ export default class DatePickerView extends View {
   constructor() {
     super(...arguments);
 
-    const calendarOptions = {
-      'enableTime': true,
-      'time_24hr': true
-    };
-
+    // TODO: перенести колбэки в презентер buildView()
     const onStartDateChange = (selectedDates) =>
       this.#endDateCalendar.set('minDate', selectedDates[0]);
 
@@ -22,20 +18,17 @@ export default class DatePickerView extends View {
      * @type {Calendar}
      */
     this.#startDateCalendar = initCalendar(
-      this.querySelector('[name="event-start-time"]'),
-      {
-        ...calendarOptions,
-        onChange: [onStartDateChange]
-      }
+      this.querySelector('[name="date_from"]'),
     );
 
     /**
      * @type {Calendar}
      */
     this.#endDateCalendar = initCalendar(
-      this.querySelector('[name="event-end-time"]'),
-      calendarOptions
+      this.querySelector('[name="date_to"]')
     );
+
+    this.#startDateCalendar.set('onChange', onStartDateChange);
 
     this.classList.add('event__field-group', 'event__field-group--time');
   }
@@ -50,7 +43,7 @@ export default class DatePickerView extends View {
         class="event__input  event__input--time"
         id="event-start-time-1"
         type="text"
-        name="event-start-time"
+        name="date_from"
         value=""
       >
       &mdash;
@@ -59,21 +52,10 @@ export default class DatePickerView extends View {
         class="event__input  event__input--time"
         id="event-end-time-1"
         type="text"
-        name="event-end-time"
+        name="date_to"
         value=""
       >
     `;
-  }
-
-  /**
-   * @param {CalendarOptions} startDateOptions
-   * @param {CalendarOptions} endDateOptions
-   */
-  configure(startDateOptions, endDateOptions = startDateOptions) {
-    this.#startDateCalendar.set(startDateOptions);
-    this.#endDateCalendar.set(endDateOptions);
-
-    return this;
   }
 
   getDates() {
@@ -90,6 +72,21 @@ export default class DatePickerView extends View {
   setDates(startDate, endDate = startDate) {
     this.#startDateCalendar.setDate(new Date(startDate), true);
     this.#endDateCalendar.setDate(new Date(endDate), true);
+  }
+
+  /**
+   * @param {CalendarOptions} startDateOptions
+   * @param {CalendarOptions} endDateOptions
+   */
+  configure(startDateOptions, endDateOptions = startDateOptions) {
+    this.#startDateCalendar.set(startDateOptions);
+    this.#endDateCalendar.set(endDateOptions);
+
+    return this;
+  }
+
+  static configure(options) {
+    initCalendar.setDefaults(options);
   }
 }
 

@@ -1,5 +1,4 @@
 import RadioGroupView, {html} from './radio-group-view.js';
-import {getIconUrl} from '../utils.js';
 
 export default class PointTypeSelectView extends RadioGroupView {
   constructor() {
@@ -75,7 +74,7 @@ export default class PointTypeSelectView extends RadioGroupView {
 
     const imgView = this.querySelector('img');
 
-    imgView.src = getIconUrl(type);
+    imgView.src = `img/icons/${type}.png`;
 
     return this.expand(false);
   }
