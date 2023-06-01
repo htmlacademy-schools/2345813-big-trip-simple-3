@@ -23,10 +23,12 @@ export default class DataTableModel extends CollectionModel {
   /**
    * @param {FilterPredicate} predicate
    */
-  setFilter(predicate) {
+  setFilter(predicate, notify = true) {
     this.#filter = predicate;
 
-    this.dispatchEvent(new CustomEvent('filter'));
+    if (notify) {
+      this.dispatchEvent(new CustomEvent('filter'));
+    }
 
     return this;
   }
@@ -38,10 +40,12 @@ export default class DataTableModel extends CollectionModel {
   /**
    * @param {SortCompare} compare
    */
-  setSort(compare) {
+  setSort(compare, notify = true) {
     this.#sort = compare;
 
-    this.dispatchEvent(new CustomEvent('sort'));
+    if (notify) {
+      this.dispatchEvent(new CustomEvent('sort'));
+    }
 
     return this;
   }

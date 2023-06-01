@@ -28,7 +28,6 @@ export default class SortView extends RadioGroupView {
     `;
   }
 
-
   /**
    * @param {[string, string][]} states
    */

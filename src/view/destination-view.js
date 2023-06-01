@@ -4,10 +4,10 @@ export default class DestinationView extends View {
   constructor() {
     super(...arguments);
 
-    this.classList.add('event__section', 'event__section--destination');
-
     this.photoContainerView = this.querySelector('.event__photos-container');
     this.photoListView = this.querySelector('.event__photos-tape');
+
+    this.classList.add('event__section', 'event__section--destination');
 
     this.photoContainerView.remove();
   }
