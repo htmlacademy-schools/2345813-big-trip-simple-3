@@ -45,7 +45,7 @@ const createPointsTemplate = (point) => {
   `);
 };
 
-export default class Point extends AbstractView {
+export default class PointsView extends AbstractView {
   constructor(point) {
     super();
     this.point = point;
