@@ -1,8 +1,9 @@
 import { render } from '../framework/render.js';
-import SortList from '../view/sort-list.js';
-import TripList from '../view/trip-list.js';
-import EmptyList from '../view/empty-list.js';
-import PointPresenter from './presenter.js';
+import SortView from '../view/sort-view.js';
+import TripListView from '../view/trip-events-list-view';
+// import NewPointView from '../view/new-point-view.js';
+import EmptyView from '../view/list-empty-view.js';
+import PointPresenter from './point-presenter.js';
 import { updateItem } from '../utils/utils.js';
 import { sortPointOffers, sortPointTime, sortPointEvent, sortPointPrice, SortType, sortPointDay } from '../utils/sort-module.js';
 
@@ -10,9 +11,9 @@ export default class BoardPresenter {
   #boardContainer = null;
   #pointsModel = null;
   #boardPoints = [];
-  #sortComponent = new SortList();
-  #emptyViewComponent = new EmptyList();
-  #eventsList = new TripList();
+  #sortComponent = new SortView();
+  #emptyViewComponent = new EmptyView();
+  #eventsList = new TripListView();
   #pointPresenter = new Map();
   #currentSortType = SortType.DAY;
 
@@ -94,11 +95,12 @@ export default class BoardPresenter {
 
   #renderBoardPoints = () => this.#boardPoints.length ? this.#boardPoints.forEach((point) => this.#renderPoint(point)) : this.#renderEmptyView();
 
-  // #renderNewPoint = () => render(new NewPointView(this.#boardPoints[1]), this.#eventsList.element);
+  // #renderNewPoint = () => render(new NewPointView(this.#boardPoints[0]), this.#eventsList.element);
 
   #renderBoard = () => {
     this.#renderSort();
     this.#renderEventList();
+    // this.#renderNewPoint();
     this.#renderBoardPoints();
     this.#boardPoints.sort(sortPointDay);
   };
