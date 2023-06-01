@@ -1,7 +1,7 @@
 import { render, replace } from '../framework/render.js';
 import PointsView from '../view/point.js';
 import SortView from '../view/sort-list.js';
-import TripList from '../view/trip-list.js';
+import TripListView from '../view/trip-list';
 // import NewPointView from '../view/new-point.js';
 import EditPointView from '../view/edit-point.js';
 import EmptyView from '../view/empty-list.js';
@@ -11,7 +11,7 @@ export default class BoardPresenter {
   #pointsModel = null;
   #boardPoints = [];
 
-  eventsList = new TripList();
+  eventsList = new TripListView();
 
   constructor(boardContainer, pointsModel) {
     this.#boardContainer = boardContainer;
