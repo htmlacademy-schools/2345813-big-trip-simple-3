@@ -155,13 +155,15 @@ const editPointTemplate = (point) => {
 };
 
 export default class EditPoint extends AbstractView {
+  #point = null;
+
   constructor(point) {
     super();
-    this.point = point;
+    this.#point = point;
   }
 
   get template() {
-    return editPointTemplate(this.point);
+    return editPointTemplate(this.#point);
   }
 
   setEditClickHandler = (callback) => {
@@ -170,7 +172,7 @@ export default class EditPoint extends AbstractView {
   };
 
   setFormSubmitHandler = (callback) => {
-    this._callback.editClick = callback;
+    this._callback.formSubmit = callback;
     this.element.querySelector('form').addEventListener('submit', this.#submitClickHandler);
   };
 
@@ -181,6 +183,6 @@ export default class EditPoint extends AbstractView {
 
   #submitClickHandler = (evt) => {
     evt.preventDefault();
-    this._callback.editClick();
+    this._callback.formSubmit(this.#point);
   };
 }

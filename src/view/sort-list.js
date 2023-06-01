@@ -29,7 +29,7 @@ const createSortTemplate = () => (`
 </form>
 `);
 
-export default class SortLists extends AbstractView{
+export default class SortList extends AbstractView{
   get template() {
     return createSortTemplate();
   }
