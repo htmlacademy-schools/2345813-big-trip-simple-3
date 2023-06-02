@@ -1,6 +1,6 @@
-import './destination-select-view.css';
+import '../css/destination-select-view.css';
 
-import KeyboardCommand from '../enum/keyboard-command';
+import KeyboardCommand from '../../enum/keyboard-command';
 import View, {html} from './view.js';
 
 export default class DestinationSelectView extends View {

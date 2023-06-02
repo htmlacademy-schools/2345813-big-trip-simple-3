@@ -1,4 +1,4 @@
-import './view.css';
+import '../css/view.css';
 
 /**
  * @param {TemplateStringsArray} strings

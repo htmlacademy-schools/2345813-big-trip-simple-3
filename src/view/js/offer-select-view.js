@@ -1,4 +1,4 @@
-import './offer-select-view.css';
+import '../css/offer-select-view.css';
 
 import View, {html} from './view.js';
 

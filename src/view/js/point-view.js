@@ -1,4 +1,4 @@
-import './point-view.css';
+import '../css/point-view.css';
 
 import View, {html} from './view.js';
 

@@ -1,4 +1,4 @@
-import KeyboardCommand from '../enum/keyboard-command.js';
+import KeyboardCommand from '../../enum/keyboard-command.js';
 import RadioGroupView, {html} from './radio-group-view.js';
 
 export default class PointTypeSelectView extends RadioGroupView {

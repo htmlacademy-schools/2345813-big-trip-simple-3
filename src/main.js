@@ -11,11 +11,11 @@ import PointAdapter from './adapter/point-adapter.js';
 import DestinationAdapter from './adapter/destination-adapter.js';
 import OfferGroupAdapter from './adapter/offer-group-adapter.js';
 
-import FilterView from './view/filter-view.js';
-import SortView from './view/sort-view.js';
-import ListView from './view/list-view.js';
-import CreatorView from './view/creator-view.js';
-import EditorView from './view/editor-view.js';
+import FilterView from './view/js/filter-view.js';
+import SortView from './view/js/sort-view.js';
+import ListView from './view/js/list-view.js';
+import CreatorView from './view/js/creator-view.js';
+import EditorView from './view/js/editor-view.js';
 
 import FilterPresenter from './presenter/filter-presenter.js';
 import SortPresenter from './presenter/sort-presenter.js';

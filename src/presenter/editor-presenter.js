@@ -1,6 +1,6 @@
 import Mode from '../enum/mode.js';
 import CreatorPresenter from './creator-presenter.js';
-import PointView from '../view/point-view.js';
+import PointView from '../view/js/point-view.js';
 
 /**
  * @template {ApplicationModel} Model

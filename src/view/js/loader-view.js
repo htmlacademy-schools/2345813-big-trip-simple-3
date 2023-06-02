@@ -1,4 +1,4 @@
-import './loader-view.css';
+import '../css/loader-view.css';
 import View from './view.js';
 
 /**

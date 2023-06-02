@@ -5,7 +5,7 @@ import PointType from '../enum/point-type.js';
 import PointLabel from '../enum/point-label.js';
 
 import Presenter from './presenter.js';
-import DatePickerView from '../view/date-picker-view.js';
+import DatePickerView from '../view/js/date-picker-view.js';
 
 DatePickerView.configure({
   'enableTime': true,
