@@ -35,7 +35,7 @@ export default class Store {
   }
 
   /**
-   * @param {ItemId} id
+   * @param {string} id
    * @param {Item} item
    * @returns {Promise<Item>}
    */
@@ -47,8 +47,8 @@ export default class Store {
   }
 
   /**
-   * @param {ItemId} id
-   * @returns {Promise<Item>}
+   * @param {string} id
+   * @returns {Promise<string>}
    */
   remove(id) {
     return this.request(`/${id}`, {
@@ -68,13 +68,20 @@ export default class Store {
       ...options.headers
     };
     const response = await fetch(url, {...options, headers});
-    const {parse} = /** @type {typeof Store} */(this.constructor);
+    const {parse, assert} = /** @type {typeof Store} */(this.constructor);
 
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
+    await assert(response);
 
     return parse(response);
+  }
+
+  /**
+   * @param {Response} response
+   */
+  static async assert(response) {
+    if (!response.ok) {
+      throw new Error(`${response.status} - ${response.statusText}`);
+    }
   }
 
   /**

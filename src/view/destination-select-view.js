@@ -1,9 +1,9 @@
 import './destination-select-view.css';
+
+import KeyboardCommand from '../enum/keyboard-command';
 import View, {html} from './view.js';
 
 export default class DestinationSelectView extends View {
-  #options;
-
   constructor() {
     super(...arguments);
 
@@ -25,7 +25,7 @@ export default class DestinationSelectView extends View {
   }
 
   get allowedKeys() {
-    return ['Tab', 'ArrowUp', 'ArrowDown', 'Escape', 'Esc'];
+    return ['Tab', ...Object.values(KeyboardCommand).flat()];
   }
 
   /**
@@ -75,13 +75,12 @@ export default class DestinationSelectView extends View {
   }
 
   /**
-   * @param {[string, string][]} states
+   * @param {DestinationOptionState[]} states
    */
   setOptions(states) {
     const views = states.map((state) => new Option(...state));
 
     this.datalistView.replaceChildren(...views);
-    this.#options = states;
 
     return this;
   }
@@ -108,6 +107,9 @@ export default class DestinationSelectView extends View {
     this.replaceValueWithPlaceholder();
   }
 
+  /**
+   * @param {KeyboardEvent} event
+   */
   onKeydown(event) {
     if (!this.allowedKeys.includes(event.key)) {
       event.preventDefault();

@@ -2,7 +2,7 @@ import SortType from '../enum/sort-type.js';
 import SortLabel from '../enum/sort-label.js';
 import SortDisabled from '../enum/sort-disabled.js';
 import Presenter from './presenter.js';
-import SortPredicate from '../enum/sort-predicate.js';
+import SortCompare from '../enum/sort-compare.js';
 import Mode from '../enum/mode.js';
 
 /**
@@ -28,7 +28,7 @@ export default class SortPresenter extends Presenter {
   }
 
   buildView() {
-    /** @type {[string, string][]} */
+    /** @type {SortOptionState[]} */
     const options = Object.keys(SortType).map(
       (key) => [SortLabel[key], SortType[key]]
     );
@@ -43,7 +43,7 @@ export default class SortPresenter extends Presenter {
 
   updateViewValue() {
     const compare = this.model.pointsModel.getSort();
-    const type = SortType[SortPredicate.findKey(compare)];
+    const type = SortType[SortCompare.findKey(compare)];
 
     this.view.setValue(type);
   }
@@ -56,19 +56,20 @@ export default class SortPresenter extends Presenter {
 
   onViewChange() {
     const value = this.view.getValue();
-    const compare = SortPredicate[SortType.findKey(value)];
+    const compare = SortCompare[SortType.findKey(value)];
 
     this.model.setMode(Mode.VIEW);
     this.model.pointsModel.setSort(compare);
   }
 
+  /**
+   * @param {CustomEvent} event
+   */
   onPointsModelChange(event) {
     if (event.type === 'filter') {
-      this.model.pointsModel.setSort(SortPredicate.defaultValue, false);
+      this.model.pointsModel.setSort(SortCompare.DAY, false);
 
       this.updateViewValue();
-
-      return;
     }
 
     this.updateViewDisplay();

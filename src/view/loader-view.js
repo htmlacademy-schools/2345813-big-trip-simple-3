@@ -1,6 +1,9 @@
 import './loader-view.css';
 import View from './view.js';
 
+/**
+ * @implements {EventListenerObject}
+ */
 export default class LoaderView extends View {
   constructor() {
     super(...arguments);
@@ -28,6 +31,9 @@ export default class LoaderView extends View {
     this.ownerView.removeEventListener('keydown', this);
   }
 
+  /**
+   * @param {KeyboardEvent} event
+   */
   handleEvent(event) {
     event.preventDefault();
   }

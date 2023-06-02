@@ -7,13 +7,10 @@ import CollectionModel from './collection-model.js';
  */
 export default class DataTableModel extends CollectionModel {
 
-  /** @typedef {(item: ItemAdapter) => boolean} FilterPredicate */
-  /** @typedef {(item: ItemAdapter, nextItem: ItemAdapter) => number} SortCompare */
-
-  /** @type {FilterPredicate} */
+  /** @type {Predicate<ItemAdapter>} */
   #filter = () => true;
 
-  /** @type {SortCompare} */
+  /** @type {Compare<ItemAdapter>} */
   #sort = () => 0;
 
   getFilter() {
@@ -21,7 +18,7 @@ export default class DataTableModel extends CollectionModel {
   }
 
   /**
-   * @param {FilterPredicate} predicate
+   * @param {Predicate<ItemAdapter>} predicate
    */
   setFilter(predicate, notify = true) {
     this.#filter = predicate;
@@ -38,7 +35,7 @@ export default class DataTableModel extends CollectionModel {
   }
 
   /**
-   * @param {SortCompare} compare
+   * @param {Compare<ItemAdapter>} compare
    */
   setSort(compare, notify = true) {
     this.#sort = compare;

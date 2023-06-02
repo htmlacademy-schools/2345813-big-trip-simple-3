@@ -7,7 +7,7 @@ export default class DestinationAdapter extends Adapter {
   constructor(destination) {
     super();
 
-    this.id = destination.id;
+    this.id = String(destination.id);
     this.description = destination.description;
     this.name = destination.name;
     this.pictures = destination.pictures.map((picture) => ({...picture}));

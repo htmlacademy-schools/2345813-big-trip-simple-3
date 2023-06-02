@@ -1,13 +1,11 @@
+import {escape} from 'he';
+import { formatDate, formatTime, formatNumber } from '../format.js';
+
 import Mode from '../enum/mode.js';
 import PointType from '../enum/point-type.js';
 import PointLabel from '../enum/point-label.js';
-import Presenter from './presenter.js';
-import { formatDate, formatNumber } from '../format.js';
 
-const DateFormat = {
-  TIME: 'HH:mm',
-  CALENDAR_DATE: 'MMM D'
-};
+import Presenter from './presenter.js';
 
 /**
  * @template {ApplicationModel} Model
@@ -23,18 +21,21 @@ export default class ListPresenter extends Presenter {
 
     this.updateView();
 
-    this.view.addEventListener('edit', this.onPointViewEdit.bind(this));
+    this.view.addEventListener('edit', this.onViewEdit.bind(this));
 
     this.model.pointsModel.addEventListener(
       ['add', 'update', 'remove', 'filter', 'sort'],
-      this.onModelPointsChange.bind(this)
+      this.onPointsModelChange.bind(this)
     );
   }
 
-  updateView() {
+  /**
+   * @param {string} [revealingPointId]
+   */
+  updateView(revealingPointId) {
     const points = this.model.pointsModel.list();
 
-    const states = points.map((point) => {
+    const states = points.map((point, index) => {
       const {startDate, endDate} = point;
       const destination = this.model.destinationsModel.findById(point.destinationId);
       const typeLabel = PointLabel[PointType.findKey(point.type)];
@@ -43,23 +44,28 @@ export default class ListPresenter extends Presenter {
 
       const offerStates = offerGroup.items.reduce((result, offer) => {
         if (point.offerIds.includes(offer.id)) {
-          result.push([offer.title, offer.price]);
+          result.push([escape(offer.title), escape(formatNumber(offer.price))]);
         }
 
         return result;
       }, []);
 
+      if (revealingPointId) {
+        index = (revealingPointId === point.id) ? 0 : null;
+      }
+
       return {
-        id: point.id,
-        type: point.type,
-        startIsoDate: startDate,
-        endIsoDate: endDate,
-        title,
-        icon: point.type,
-        startDate: formatDate(startDate, DateFormat.CALENDAR_DATE),
-        startTime: formatDate(startDate, DateFormat.TIME),
-        endTime: formatDate(endDate, DateFormat.TIME),
-        price: formatNumber(point.basePrice),
+        id: escape(point.id),
+        index,
+        type: escape(point.type),
+        startIsoDate: escape(startDate),
+        endIsoDate: escape(endDate),
+        title: escape(title),
+        icon: escape(point.type),
+        startDate: formatDate(startDate),
+        startTime: formatTime(startDate),
+        endTime: formatTime(endDate),
+        price: escape(formatNumber(point.basePrice)),
         offers: offerStates
       };
     });
@@ -67,14 +73,37 @@ export default class ListPresenter extends Presenter {
     this.view.setPoints(states);
   }
 
-  onModelPointsChange() {
+  /**
+   * @param {CustomEvent<PointAdapter> & CustomEvent<[newItem: PointAdapter, oldItem: PointAdapter]>} event
+   */
+  onPointsModelChange(event) {
+    if (event.type === 'add') {
+      this.updateView(event.detail.id);
+
+      return;
+    }
+
+    if (event.type === 'update') {
+      const [point] = event.detail;
+
+      this.updateView(point.id);
+
+      return;
+    }
+
+    if (event.type === 'remove') {
+      this.view.findById(event.detail.id).remove();
+
+      return;
+    }
+
     this.updateView();
   }
 
   /**
    * @param {CustomEvent & {target: PointView}} event
    */
-  onPointViewEdit(event) {
+  onViewEdit(event) {
     this.model.setMode(Mode.EDIT, event.target.getId());
   }
 }

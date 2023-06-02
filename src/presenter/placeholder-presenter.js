@@ -22,28 +22,23 @@ export default class PlaceholderPresenter extends Presenter {
       this.onPointsModelChange.bind(this)
     );
 
-    this.model.addEventListener('mode', this.onModelChange.bind(this));
+    this.model.addEventListener('mode', this.onModelMode.bind(this));
   }
 
   updateView() {
     const {length} = this.model.pointsModel.list();
     const key = FilterPredicate.findKey(this.model.pointsModel.getFilter());
+    const isHidden = Boolean(length) || this.model.getMode() === Mode.CREATE;
 
-    this.view.textContent = length ? '' : FilterEmpty[key];
-    this.view.hidden = Boolean(length);
+    this.view.textContent = isHidden ? '' : FilterEmpty[key];
+    this.view.hidden = isHidden;
   }
 
   onPointsModelChange() {
     this.updateView();
   }
 
-  onModelChange() {
-    if (this.model.getMode() === Mode.CREATE) {
-      this.view.hidden = true;
-
-      return;
-    }
-
+  onModelMode() {
     this.updateView();
   }
 }

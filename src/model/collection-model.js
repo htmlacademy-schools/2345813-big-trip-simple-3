@@ -8,6 +8,9 @@ export default class CollectionModel extends Model {
   /** @type {Item[]} */
   #items;
 
+  /** @type {Promise<void>} */
+  #ready;
+
   #store;
   #adapt;
 
@@ -29,10 +32,12 @@ export default class CollectionModel extends Model {
   /**
    * @override
    */
-  async ready() {
-    if (!this.#items) {
-      this.#items = await this.#store.list();
-    }
+  ready() {
+    this.#ready ??= this.#store.list().then((items) => {
+      this.#items = items;
+    });
+
+    return this.#ready;
   }
 
   listAll() {
@@ -48,7 +53,7 @@ export default class CollectionModel extends Model {
   }
 
   /**
-   * @param {ItemId} value
+   * @param {string} value
    */
   findById(value) {
     return this.findBy('id', value);
@@ -63,12 +68,15 @@ export default class CollectionModel extends Model {
   }
 
   /**
-   * @param {ItemId} value
+   * @param {string} value
    */
   findIndexById(value) {
     return this.findIndexBy('id', value);
   }
 
+  /**
+   * @param {number} index
+   */
   item(index) {
     const item = this.#items[index];
 
@@ -88,13 +96,13 @@ export default class CollectionModel extends Model {
   }
 
   /**
-   * @param {ItemId} id
+   * @param {string} id
    * @param {ItemAdapter} item
    */
   async update(id, item) {
     const updatedItem = await this.#store.update(id, item.toJSON());
     const index = this.findIndexById(id);
-    const detail = [this.item(index), this.#adapt(updatedItem)];
+    const detail = [this.#adapt(updatedItem), this.item(index)];
 
     this.#items.splice(index, 1, updatedItem);
 
@@ -102,7 +110,7 @@ export default class CollectionModel extends Model {
   }
 
   /**
-   * @param {ItemId} id
+   * @param {string} id
    */
   async remove(id) {
     await this.#store.remove(id);

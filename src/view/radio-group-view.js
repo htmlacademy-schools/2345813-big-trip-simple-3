@@ -7,6 +7,13 @@ export default class RadioGroupView extends View {
     return '[type="radio"]';
   }
 
+  /**
+   * @type {NodeListOf<HTMLInputElement>}
+   */
+  get inputViews() {
+    return this.querySelectorAll(this.inputSelector);
+  }
+
   getValue() {
     /** @type {HTMLInputElement} */
     const inputCheckedView = this.querySelector(`${this.inputSelector}:checked`);
@@ -15,9 +22,12 @@ export default class RadioGroupView extends View {
       return inputCheckedView.value;
     }
 
-    return null;
+    return '';
   }
 
+  /**
+   * @param {string} value
+   */
   setValue(value) {
     /** @type {HTMLInputElement} */
     const inputView = this.querySelector(`${this.inputSelector}[value="${value}"]`);
@@ -29,14 +39,33 @@ export default class RadioGroupView extends View {
     return this;
   }
 
+  getIndex() {
+    return [...this.inputViews].findIndex((view) => view.checked);
+  }
+
+  /**
+   * @param {number} index
+   */
+  setIndex(index, notify = true) {
+    const views = this.inputViews;
+    const rangeIndex = (views.length + index) % views.length;
+
+    views.item(rangeIndex).checked = true;
+
+    if (notify) {
+      views.item(rangeIndex).dispatchEvent(new Event('change', {bubbles: true}));
+    }
+
+    return this;
+  }
+
   /**
    * @param {boolean[]} flags
    */
   setOptionsDisabled(flags) {
-    /** @type {NodeListOf<HTMLInputElement>} */
-    const views = this.querySelectorAll(this.inputSelector);
-
-    views.forEach((view, index) => (view.disabled = flags[index]));
+    this.inputViews.forEach((view, index) => {
+      view.disabled = flags[index];
+    });
 
     return this;
   }

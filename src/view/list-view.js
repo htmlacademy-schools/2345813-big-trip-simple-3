@@ -9,7 +9,7 @@ export default class ListView extends View {
   }
 
   /**
-   * @param {number} id
+   * @param {string} id
    */
   findById(id) {
     return PointView.findById(id, this);
@@ -19,7 +19,7 @@ export default class ListView extends View {
    * @param {PointState[]} states
    */
   setPoints(states) {
-    const views = states.map((state) => new PointView(state).setOffers(state.offers));
+    const views = states.map((state) => new PointView(state));
 
     this.replaceChildren(...views);
 

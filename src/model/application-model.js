@@ -3,10 +3,7 @@ import PointType from '../enum/point-type.js';
 import Model from './model.js';
 
 export default class ApplicationModel extends Model {
-  /**
-   * @type {number}
-   */
-  #mode;
+  #mode = Mode.VIEW;
 
   /**
    * @param {DataTableModel<Point,PointAdapter>} pointsModel
@@ -53,7 +50,7 @@ export default class ApplicationModel extends Model {
 
   /**
    * @param {number} mode
-   * @param {number} activePointId
+   * @param {string} activePointId
    */
   setMode(mode, activePointId = null) {
     switch (mode) {

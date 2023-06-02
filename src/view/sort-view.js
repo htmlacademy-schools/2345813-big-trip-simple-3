@@ -6,12 +6,16 @@ export default class SortView extends RadioGroupView {
    */
   createTemplate() {
     return html`
-      <form class="trip-events__trip-sort  trip-sort" action="#" method="get">
-      </form>
+      <form class="trip-events__trip-sort  trip-sort" action="#" method="get"></form>
     `;
   }
 
-  createOptionTemplate(label, value) {
+  /**
+   * @param {SortOptionState} state
+   */
+  createOptionTemplate(state) {
+    const [label, value] = state;
+
     return html`
       <div class="trip-sort__item trip-sort__item--${value}">
         <input
@@ -29,10 +33,10 @@ export default class SortView extends RadioGroupView {
   }
 
   /**
-   * @param {[string, string][]} states
+   * @param {SortOptionState[]} states
    */
   setOptions(states) {
-    const templates = states.map((state) => this.createOptionTemplate(...state));
+    const templates = states.map(this.createOptionTemplate);
 
     this.querySelector('form').innerHTML = templates.join('');
 

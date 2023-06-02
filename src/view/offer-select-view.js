@@ -6,8 +6,6 @@ export default class OfferSelectView extends View {
   constructor() {
     super(...arguments);
 
-    this.offersView = this.querySelector('.event__available-offers');
-
     this.classList.add('event__section', 'event__section--offers');
   }
 
@@ -21,7 +19,12 @@ export default class OfferSelectView extends View {
   `;
   }
 
-  createOptionTemplate(id, title, price, isChecked) {
+  /**
+   * @param {OfferOptionState} state
+   */
+  createOptionTemplate(state) {
+    const [id, title, price, isChecked] = state;
+
     return html`
       <div class="event__offer-selector">
         <input
@@ -49,12 +52,12 @@ export default class OfferSelectView extends View {
   }
 
   /**
-   * @param {[number, string, number, boolean][]} states
+   * @param {OfferOptionState[]} states
    */
   setOptions(states) {
-    const templates = states.map((state) => this.createOptionTemplate(...state));
+    const templates = states.map(this.createOptionTemplate);
 
-    this.offersView.innerHTML = templates.join('');
+    this.querySelector('.event__available-offers').innerHTML = templates.join('');
 
     return this;
   }

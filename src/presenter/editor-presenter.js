@@ -20,7 +20,7 @@ export default class EditorPresenter extends CreatorPresenter {
   /**
    * @override
    */
-  onModelModeChange() {
+  onModelMode() {
     this.point = this.model.activePoint;
 
     this.view.close(false);

@@ -1,6 +1,8 @@
 import FilterPredicate from './enum/filter-predicate.js';
+import SortCompare from './enum/sort-compare.js';
 
 import Store from './store/store.js';
+
 import CollectionModel from './model/collection-model.js';
 import DataTableModel from './model/data-table-model.js';
 import ApplicationModel from './model/application-model.js';
@@ -12,6 +14,7 @@ import OfferGroupAdapter from './adapter/offer-group-adapter.js';
 import FilterView from './view/filter-view.js';
 import SortView from './view/sort-view.js';
 import ListView from './view/list-view.js';
+import CreatorView from './view/creator-view.js';
 import EditorView from './view/editor-view.js';
 
 import FilterPresenter from './presenter/filter-presenter.js';
@@ -20,16 +23,15 @@ import ListPresenter from './presenter/list-presenter.js';
 import EditorPresenter from './presenter/editor-presenter.js';
 import PlaceholderPresenter from './presenter/placeholder-presenter.js';
 import CreateButtonPresenter from './presenter/create-button-presenter.js';
-import Mode from './enum/mode.js';
 import CreatorPresenter from './presenter/creator-presenter.js';
-import CreatorView from './view/creator-view.js';
-import SortPredicate from './enum/sort-predicate.js';
+
 
 const BASE_URL = 'https://18.ecmascript.pages.academy/big-trip';
 const POINTS_URL = `${BASE_URL}/points`;
 const DESTINATIONS_URL = `${BASE_URL}/destinations`;
 const OFFERS_URL = `${BASE_URL}/offers`;
-const AUTH = 'Basic er1083jdzbdw';
+const AUTH = 'Basic bo1080bdzbgg';
+
 
 /** @type {Store<Point>} */
 const pointsStore = new Store(POINTS_URL, AUTH);
@@ -40,21 +42,17 @@ const destinationsStore = new Store(DESTINATIONS_URL, AUTH);
 /** @type {Store<OfferGroup>} */
 const offerGroupsStore = new Store(OFFERS_URL, AUTH);
 
-const pointsModel = new DataTableModel(pointsStore, (point) => new PointAdapter(point))
+
+const pointsModel = new DataTableModel(pointsStore, (item) => new PointAdapter(item))
   .setFilter(FilterPredicate.EVERYTHING)
-  .setSort(SortPredicate.DAY);
+  .setSort(SortCompare.DAY);
 
-const destinationsModel = new CollectionModel(
-  destinationsStore,
-  (destination) => new DestinationAdapter(destination)
-);
+const destinationsModel = new CollectionModel(destinationsStore, (item) => new DestinationAdapter(item));
 
-const offerGroupsModel = new CollectionModel(
-  offerGroupsStore,
-  (offerGroup) => new OfferGroupAdapter(offerGroup)
-);
+const offerGroupsModel = new CollectionModel(offerGroupsStore, (item) => new OfferGroupAdapter(item));
 
 const applicationModel = new ApplicationModel(pointsModel, destinationsModel, offerGroupsModel);
+
 
 /** @type {SortView} */
 const sortView = document.querySelector(String(SortView));
@@ -71,30 +69,16 @@ const createButtonView = document.querySelector('.trip-main__event-add-btn');
 /** @type {FilterView} */
 const filterView = document.querySelector(String(FilterView));
 
-const creatorView = new CreatorView().target(listView);
 
-const initializeApp = async () => {
-  await applicationModel.ready();
-
+applicationModel.ready().then(() => {
   new FilterPresenter(applicationModel, filterView);
   new SortPresenter(applicationModel, sortView);
   new ListPresenter(applicationModel, listView);
   new EditorPresenter(applicationModel, new EditorView());
-  new CreatorPresenter(applicationModel, creatorView);
+  new CreatorPresenter(applicationModel, new CreatorView().target(listView));
   new PlaceholderPresenter(applicationModel, placeholderView);
   new CreateButtonPresenter(applicationModel, createButtonView);
-};
 
-initializeApp();
-
-
-const {trace} = console;
-
-applicationModel.addEventListener('mode', () => {
-  trace(`%cMode.${Mode.findKey(applicationModel.getMode())}`, 'font-size: large');
+}).catch((exception) => {
+  placeholderView.textContent = exception;
 });
-
-pointsModel.addEventListener(['add', 'update', 'remove', 'filter', 'sort'], (event) => {
-  trace(`%c${event.type}`, 'font-weight: bold');
-});
-

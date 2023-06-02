@@ -4,12 +4,7 @@ export default class DestinationView extends View {
   constructor() {
     super(...arguments);
 
-    this.photoContainerView = this.querySelector('.event__photos-container');
-    this.photoListView = this.querySelector('.event__photos-tape');
-
     this.classList.add('event__section', 'event__section--destination');
-
-    this.photoContainerView.remove();
   }
 
   /**
@@ -21,13 +16,25 @@ export default class DestinationView extends View {
       <p class="event__destination-description"></p>
 
       <div class="event__photos-container">
-        <div class="event__photos-tape">
-          <img class="event__photo" src="img/photos/1.jpg" alt="Event photo">
-         </div>
+        <div class="event__photos-tape"></div>
       </div>
     `;
   }
 
+  /**
+   * @param {DestinationPictureState} state
+   */
+  createPictureTemplate(state) {
+    const [src, alt] = state;
+
+    return html`
+      <img class="event__photo" src="${src}" alt="${alt}">
+    `;
+  }
+
+  /**
+   * @param {string} description
+   */
   setDescription(description) {
     this.querySelector('.event__destination-description').textContent = description;
 
@@ -35,15 +42,12 @@ export default class DestinationView extends View {
   }
 
   /**
-   * @param {[string, string][]} states
+   * @param {DestinationPictureState[]} states
    */
   setPictures(states) {
-    const views = states.map(([src, alt]) =>
-      Object.assign(new Image(), { src, alt, className: 'event__photo' })
-    );
+    const templates = states.map(this.createPictureTemplate);
 
-    this.photoListView.replaceChildren(...views);
-    this.append(this.photoContainerView);
+    this.querySelector('.event__photos-tape').innerHTML = templates.join('');
 
     return this;
   }

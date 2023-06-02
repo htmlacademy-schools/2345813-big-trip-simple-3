@@ -1,7 +1,8 @@
 import DeleteButtonLabel from '../enum/delete-button-label.js';
+import SaveButtonLabel from '../enum/save-button-label.js';
+
 import {html} from './view.js';
 import CreatorView from './creator-view.js';
-import SaveButtonLabel from '../enum/save-button-label.js';
 
 export default class EditorView extends CreatorView {
   constructor() {
@@ -32,6 +33,8 @@ export default class EditorView extends CreatorView {
    * @param {boolean} flag
    */
   display(flag) {
+    this.id = this.targetView?.id;
+
     (flag ? this.targetView : this).replaceWith(flag ? this : this.targetView);
 
     return this;
@@ -49,6 +52,9 @@ export default class EditorView extends CreatorView {
     this.setLoading(flag);
   }
 
+  /**
+   * @param {Event & {target: HTMLButtonElement}} event
+   */
   onClick(event) {
     if (event.target.closest('.event__rollup-btn')) {
       this.close();

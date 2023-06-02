@@ -19,7 +19,7 @@ export default class FilterPresenter extends Presenter {
     this.buildView();
 
     this.view.addEventListener('change', this.onViewChange.bind(this));
-    this.model.addEventListener('mode', this.onModelChange.bind(this));
+    this.model.addEventListener('mode', this.onModelMode.bind(this));
 
     this.model.pointsModel.addEventListener(
       ['add', 'remove', 'update'],
@@ -28,7 +28,7 @@ export default class FilterPresenter extends Presenter {
   }
 
   buildView() {
-    /** @type {[string, string][]} */
+    /** @type {FilterOptionState[]} */
     const options = Object.keys(FilterType).map(
       (key) => [FilterLabel[key], FilterType[key]]
     );
@@ -65,9 +65,9 @@ export default class FilterPresenter extends Presenter {
     this.updateViewOptionsDisabled();
   }
 
-  onModelChange() {
+  onModelMode() {
     if (this.model.getMode() === Mode.CREATE) {
-      this.model.pointsModel.setFilter(FilterPredicate.defaultValue);
+      this.model.pointsModel.setFilter(FilterPredicate.EVERYTHING);
 
       this.updateViewValue();
     }

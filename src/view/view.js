@@ -10,9 +10,9 @@ export const html = (strings, ...values) =>
 
     if (value?.isViewConstructor) {
       value = `<${value}></${value}>`;
-    } else
+    }
 
-    if (Array.isArray(value)) {
+    else if (Array.isArray(value)) {
       value = value.join('');
     }
 
@@ -25,7 +25,7 @@ export default class View extends HTMLElement {
     super();
 
     this.insertAdjacentHTML(
-      this.adjacentHtmlPosition,
+      this.templatePosition,
       this.createTemplate(...arguments)
     );
   }
@@ -33,7 +33,7 @@ export default class View extends HTMLElement {
   /**
    * @type {InsertPosition}
    */
-  get adjacentHtmlPosition() {
+  get templatePosition() {
     return 'beforeend';
   }
 

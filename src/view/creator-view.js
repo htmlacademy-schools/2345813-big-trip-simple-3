@@ -1,5 +1,5 @@
 import SaveButtonLabel from '../enum/save-button-label.js';
-import ListItemView, {html} from './list-item-view.js';
+import View, {html} from './view.js';
 import PointTypeSelectView from './point-type-select-view.js';
 import DestinationSelectView from './destination-select-view.js';
 import DatePickerView from './date-picker-view.js';
@@ -7,8 +7,12 @@ import PriceInputView from './price-input-view.js';
 import OfferSelectView from './offer-select-view.js';
 import DestinationView from './destination-view.js';
 import LoaderView from './loader-view';
+import KeyboardCommand from '../enum/keyboard-command.js';
 
-export default class CreatorView extends ListItemView {
+/**
+ * @implements {EventListenerObject}
+ */
+export default class CreatorView extends View {
   constructor() {
     super();
 
@@ -39,10 +43,8 @@ export default class CreatorView extends ListItemView {
     this.loaderView = new LoaderView();
 
     this.formView = this.querySelector('form');
-  }
 
-  get closeKeys() {
-    return ['Escape', 'Esc'];
+    this.classList.add('trip-events__item', 'trip-events__item--reveal-alternate');
   }
 
   /**
@@ -132,6 +134,8 @@ export default class CreatorView extends ListItemView {
   }
 
   close(notify = true) {
+    this.datePickerView.close();
+
     this.display(false);
 
     document.removeEventListener('keydown', this);
@@ -147,7 +151,7 @@ export default class CreatorView extends ListItemView {
    * @param {KeyboardEvent} event
    */
   handleEvent(event) {
-    if (this.closeKeys.includes(event?.key)) {
+    if (KeyboardCommand.EXIT.includes(event.key)) {
       this.close();
     }
   }
