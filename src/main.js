@@ -1,22 +1,8 @@
-import FilterPredicateEnum from './enum/filter-predicate-enum.js';
-import SortCompareEnum from './enum/sort-compare-enum.js';
-
-import Store from './store/store.js';
-
-import ItemCollectionModel from './model/item-collection-model.js';
-import FilteredSortedCollectionModel from './model/filtered-sorted-collection-model.js';
-import TripPlannerModel from './model/trip-planner-model.js';
-
-import PointAdapter from './adapter/point-adapter.js';
-import DestinationAdapter from './adapter/destination-adapter.js';
-import OffersAdapter from './adapter/offers-adapter.js';
-
 import FilterView from './view/js/filter-view.js';
 import SortView from './view/js/sort-view.js';
 import ListView from './view/js/list-view.js';
 import CreatorView from './view/js/creator-view.js';
 import EditorView from './view/js/editor-view.js';
-
 import CustomFilterPresenter from './presenter/custom-filter-presenter.js';
 import SortManagerPresenter from './presenter/sort-manager-presenter.js';
 import CustomListPresenter from './presenter/custom-list-presenter.js';
@@ -24,7 +10,15 @@ import PointEditorPresenter from './presenter/point-editor-presenter.js';
 import FilterPlaceholderPresenter from './presenter/filter-placeholder-presenter.js';
 import CustomCreateButtonPresenter from './presenter/custom-create-button-presenter.js';
 import PointCreatorPresenter from './presenter/point-creator-presenter.js';
-
+import FilterPredicateEnum from './enum/filter-predicate-enum.js';
+import SortCompareEnum from './enum/sort-compare-enum.js';
+import Store from './store/store.js';
+import ItemCollectionModel from './model/item-collection-model.js';
+import FilteredSortedCollectionModel from './model/filtered-sorted-collection-model.js';
+import TripPlannerModel from './model/trip-planner-model.js';
+import PointAdapter from './adapter/point-adapter.js';
+import DestinationAdapter from './adapter/destination-adapter.js';
+import OffersAdapter from './adapter/offers-adapter.js';
 
 const BASE_URL = 'https://18.ecmascript.pages.academy/big-trip';
 const POINTS_URL = `${BASE_URL}/points`;
