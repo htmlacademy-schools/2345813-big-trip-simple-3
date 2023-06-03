@@ -1,6 +1,6 @@
 import Enum from './enum.js';
 
-export default class SortType extends Enum {
+export default class SortTypeEnum extends Enum {
   static DAY = 'day';
   static EVENT = 'event';
   static TIME = 'time';

@@ -1,11 +1,11 @@
-import FilterPredicate from './enum/filter-predicate.js';
-import SortCompare from './enum/sort-compare.js';
+import FilterPredicateEnum from './enum/filter-predicate-enum.js';
+import SortCompareEnum from './enum/sort-compare-enum.js';
 
 import Store from './store/store.js';
 
-import CollectionModel from './model/collection-model.js';
-import DataTableModel from './model/data-table-model.js';
-import ApplicationModel from './model/application-model.js';
+import ItemCollectionModel from './model/item-collection-model.js';
+import FilteredSortedCollectionModel from './model/filtered-sorted-collection-model.js';
+import TripPlannerModel from './model/trip-planner-model.js';
 
 import PointAdapter from './adapter/point-adapter.js';
 import DestinationAdapter from './adapter/destination-adapter.js';
@@ -17,13 +17,13 @@ import ListView from './view/js/list-view.js';
 import CreatorView from './view/js/creator-view.js';
 import EditorView from './view/js/editor-view.js';
 
-import FilterPresenter from './presenter/filter-presenter.js';
-import SortPresenter from './presenter/sort-presenter.js';
-import ListPresenter from './presenter/list-presenter.js';
-import EditorPresenter from './presenter/editor-presenter.js';
-import PlaceholderPresenter from './presenter/placeholder-presenter.js';
-import CreateButtonPresenter from './presenter/create-button-presenter.js';
-import CreatorPresenter from './presenter/creator-presenter.js';
+import CustomFilterPresenter from './presenter/custom-filter-presenter.js';
+import SortManagerPresenter from './presenter/sort-manager-presenter.js';
+import CustomListPresenter  from './presenter/custom-list-presenter.js';
+import PointEditorPresenter from './presenter/point-editor-presenter.js';
+import FilterPlaceholderPresenter  from './presenter/filter-placeholder-presenter.js';
+import CustomCreateButtonPresenter  from './presenter/custom-create-button-presenter.js';
+import PointCreatorPresenter from './presenter/point-creator-presenter.js';
 
 
 const BASE_URL = 'https://18.ecmascript.pages.academy/big-trip';
@@ -43,15 +43,15 @@ const destinationsStore = new Store(DESTINATIONS_URL, AUTH);
 const offerGroupsStore = new Store(OFFERS_URL, AUTH);
 
 
-const pointsModel = new DataTableModel(pointsStore, (item) => new PointAdapter(item))
-  .setFilter(FilterPredicate.EVERYTHING)
-  .setSort(SortCompare.DAY);
+const pointsModel = new FilteredSortedCollectionModel(pointsStore, (item) => new PointAdapter(item))
+  .setFilter(FilterPredicateEnum.EVERYTHING)
+  .setSort(SortCompareEnum.DAY);
 
-const destinationsModel = new CollectionModel(destinationsStore, (item) => new DestinationAdapter(item));
+const destinationsModel = new ItemCollectionModel(destinationsStore, (item) => new DestinationAdapter(item));
 
-const offerGroupsModel = new CollectionModel(offerGroupsStore, (item) => new OfferGroupAdapter(item));
+const offerGroupsModel = new ItemCollectionModel(offerGroupsStore, (item) => new OfferGroupAdapter(item));
 
-const applicationModel = new ApplicationModel(pointsModel, destinationsModel, offerGroupsModel);
+const applicationModel = new TripPlannerModel(pointsModel, destinationsModel, offerGroupsModel);
 
 
 /** @type {SortView} */
@@ -71,13 +71,13 @@ const filterView = document.querySelector(String(FilterView));
 
 
 applicationModel.ready().then(() => {
-  new FilterPresenter(applicationModel, filterView);
-  new SortPresenter(applicationModel, sortView);
-  new ListPresenter(applicationModel, listView);
-  new EditorPresenter(applicationModel, new EditorView());
-  new CreatorPresenter(applicationModel, new CreatorView().target(listView));
-  new PlaceholderPresenter(applicationModel, placeholderView);
-  new CreateButtonPresenter(applicationModel, createButtonView);
+  new CustomFilterPresenter(applicationModel, filterView);
+  new SortManagerPresenter(applicationModel, sortView);
+  new CustomListPresenter (applicationModel, listView);
+  new PointEditorPresenter(applicationModel, new EditorView());
+  new PointCreatorPresenter(applicationModel, new CreatorView().target(listView));
+  new FilterPlaceholderPresenter (applicationModel, placeholderView);
+  new CustomCreateButtonPresenter (applicationModel, createButtonView);
 
 }).catch((exception) => {
   placeholderView.textContent = exception;

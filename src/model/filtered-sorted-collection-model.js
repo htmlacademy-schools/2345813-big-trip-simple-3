@@ -1,11 +1,11 @@
-import CollectionModel from './collection-model.js';
+import ItemCollectionModel from './item-collection-model.js';
 
 /**
  * @template Item
  * @template {Adapter} ItemAdapter
- * @extends CollectionModel<Item,ItemAdapter>
+ * @extends ItemCollectionModel<Item,ItemAdapter>
  */
-export default class DataTableModel extends CollectionModel {
+export default class FilteredSortedCollectionModel extends ItemCollectionModel {
 
   /** @type {Predicate<ItemAdapter>} */
   #filter = () => true;

@@ -1,8 +1,8 @@
-import {escape} from 'he';
+import { escape } from 'he';
 
-import Mode from '../enum/mode.js';
-import PointType from '../enum/point-type.js';
-import PointLabel from '../enum/point-label.js';
+import ModeEnum from '../enum/mode-enum.js';
+import PointTypeEnum from '../enum/point-type-enum.js';
+import PointLabelEnum from '../enum/point-label-enum.js';
 
 import Presenter from './presenter.js';
 import DatePickerView from '../view/js/date-picker-view.js';
@@ -11,15 +11,15 @@ DatePickerView.configure({
   'enableTime': true,
   'time_24hr': true,
   'dateFormat': 'd/m/y H:i',
-  'locale': {firstDayOfWeek: 1}
+  'locale': { firstDayOfWeek: 1 }
 });
 
 /**
- * @template {ApplicationModel} Model
+ * @template {TripPlannerModel} Model
  * @template {CreatorView} View
  * @extends {Presenter<Model,View>}
  */
-export default class CreatorPresenter extends Presenter {
+export default class PointCreatorPresenter extends Presenter {
   /**
    * @param {[model: Model, view: View]} args
    */
@@ -42,9 +42,9 @@ export default class CreatorPresenter extends Presenter {
 
   buildView() {
     /** @type {PointTypeOptionState[]} */
-    const pointTypeSelectOptions = Object.values(PointType).map((value) => {
-      const key = PointType.findKey(value);
-      const label = PointLabel[key];
+    const pointTypeSelectOptions = Object.values(PointTypeEnum).map((value) => {
+      const key = PointTypeEnum.findKey(value);
+      const label = PointLabelEnum[key];
 
       return [label, value];
     });
@@ -58,7 +58,7 @@ export default class CreatorPresenter extends Presenter {
       onChange: [(selectedDates) => {
         const [minDate] = selectedDates;
 
-        this.view.datePickerView.configure({}, {minDate});
+        this.view.datePickerView.configure({}, { minDate });
       }]
     };
 
@@ -81,8 +81,8 @@ export default class CreatorPresenter extends Presenter {
   }
 
   updateDestinationSelectView() {
-    const {type, destinationId} = this.model.activePoint;
-    const label = PointLabel[PointType.findKey(type)];
+    const { type, destinationId } = this.model.activePoint;
+    const label = PointLabelEnum[PointTypeEnum.findKey(type)];
     const destination = this.model.destinationsModel.findById(destinationId);
 
     this.view.destinationSelectView
@@ -91,7 +91,7 @@ export default class CreatorPresenter extends Presenter {
   }
 
   updateDatePickerView() {
-    const {startDate, endDate} = this.model.activePoint;
+    const { startDate, endDate } = this.model.activePoint;
 
     this.view.datePickerView.setDates(startDate, endDate);
   }
@@ -122,7 +122,7 @@ export default class CreatorPresenter extends Presenter {
     const destination = this.model.destinationsModel.findBy('name', name);
 
     /** @type {DestinationPictureState[]} */
-    const pictureOptions = destination.pictures.map(({src, description }) => [
+    const pictureOptions = destination.pictures.map(({ src, description }) => [
       escape(src),
       escape(description)
     ]);
@@ -149,7 +149,7 @@ export default class CreatorPresenter extends Presenter {
 
   onPointTypeSelectViewChange() {
     const type = this.view.pointTypeSelectView.getValue();
-    const typeLabel = PointLabel[PointType.findKey(type)];
+    const typeLabel = PointLabelEnum[PointTypeEnum.findKey(type)];
 
     this.model.activePoint.type = type;
 
@@ -188,14 +188,14 @@ export default class CreatorPresenter extends Presenter {
   onModelMode() {
     this.view.close(false);
 
-    if (this.model.getMode() === Mode.CREATE) {
+    if (this.model.getMode() === ModeEnum.CREATE) {
       this.updateView();
       this.view.open();
     }
   }
 
   onViewClose() {
-    this.model.setMode(Mode.VIEW);
+    this.model.setMode(ModeEnum.VIEW);
   }
 
   /**
@@ -218,7 +218,6 @@ export default class CreatorPresenter extends Presenter {
     try {
       await this.saveActivePoint();
       this.view.close();
-
     } catch (exception) {
       this.view.shake();
     }

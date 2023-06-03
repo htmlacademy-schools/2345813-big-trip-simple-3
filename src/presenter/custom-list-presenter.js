@@ -1,18 +1,18 @@
-import {escape} from 'he';
-import { formatDate, formatTime, formatNumber } from '../format.js';
+import { escape } from 'he';
+import { formatDate, formatTime, formatNumber } from '../utils/format.js';
 
-import Mode from '../enum/mode.js';
-import PointType from '../enum/point-type.js';
-import PointLabel from '../enum/point-label.js';
+import ModeEnum from '../enum/mode-enum.js';
+import PointTypeEnum from '../enum/point-type-enum.js';
+import PointLabelEnum from '../enum/point-label-enum.js';
 
 import Presenter from './presenter.js';
 
 /**
- * @template {ApplicationModel} Model
+ * @template {TripPlannerModel} Model
  * @template {ListView} View
  * @extends {Presenter<Model,View>}
  */
-export default class ListPresenter extends Presenter {
+export default class CustomListPresenter extends Presenter {
   /**
    * @param {[model: Model, view: View]} args
    */
@@ -21,11 +21,11 @@ export default class ListPresenter extends Presenter {
 
     this.updateView();
 
-    this.view.addEventListener('edit', this.onViewEdit.bind(this));
+    this.view.addEventListener('edit', this.handleViewEdit.bind(this));
 
     this.model.pointsModel.addEventListener(
       ['add', 'update', 'remove', 'filter', 'sort'],
-      this.onPointsModelChange.bind(this)
+      this.handlePointsModelChange.bind(this)
     );
   }
 
@@ -36,9 +36,9 @@ export default class ListPresenter extends Presenter {
     const points = this.model.pointsModel.list();
 
     const states = points.map((point, index) => {
-      const {startDate, endDate} = point;
+      const { startDate, endDate } = point;
       const destination = this.model.destinationsModel.findById(point.destinationId);
-      const typeLabel = PointLabel[PointType.findKey(point.type)];
+      const typeLabel = PointLabelEnum[PointTypeEnum.findKey(point.type)];
       const title = `${typeLabel} ${destination.name}`;
       const offerGroup = this.model.offerGroupsModel.findById(point.type);
 
@@ -76,7 +76,7 @@ export default class ListPresenter extends Presenter {
   /**
    * @param {CustomEvent<PointAdapter> & CustomEvent<[newItem: PointAdapter, oldItem: PointAdapter]>} event
    */
-  onPointsModelChange(event) {
+  handlePointsModelChange(event) {
     if (event.type === 'add') {
       this.updateView(event.detail.id);
 
@@ -103,7 +103,7 @@ export default class ListPresenter extends Presenter {
   /**
    * @param {CustomEvent & {target: PointView}} event
    */
-  onViewEdit(event) {
-    this.model.setMode(Mode.EDIT, event.target.getId());
+  handleViewEdit(event) {
+    this.model.setMode(ModeEnum.EDIT, event.target.getId());
   }
 }

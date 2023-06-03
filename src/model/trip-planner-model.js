@@ -1,14 +1,14 @@
-import Mode from '../enum/mode.js';
-import PointType from '../enum/point-type.js';
+import Mode from '../enum/mode-enum.js';
+import PointType from '../enum/point-type-enum.js';
 import Model from './model.js';
 
-export default class ApplicationModel extends Model {
+export default class TripPlannerModel extends Model {
   #mode = Mode.VIEW;
 
   /**
-   * @param {DataTableModel<Point,PointAdapter>} pointsModel
-   * @param {CollectionModel<Destination,DestinationAdapter>} destinationsModel
-   * @param {CollectionModel<OfferGroup,OfferGroupAdapter>} offerGroupsModel
+   * @param {FilteredSortedCollectionModel<Point,PointAdapter>} pointsModel
+   * @param {ItemCollectionModel<Destination,DestinationAdapter>} destinationsModel
+   * @param {ItemCollectionModel<OfferGroup,OfferGroupAdapter>} offerGroupsModel
    */
   constructor(pointsModel, destinationsModel, offerGroupsModel) {
     super();

@@ -1,6 +1,6 @@
 import Enum from './enum.js';
 
-export default class SortCompare extends Enum {
+export default class SortCompareEnum extends Enum {
   /**
    * @type {Compare<PointAdapter>}
    */

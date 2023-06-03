@@ -4,7 +4,7 @@ import Model from './model.js';
  * @template Item
  * @template {Adapter} ItemAdapter
  */
-export default class CollectionModel extends Model {
+export default class ItemCollectionModel extends Model {
   /** @type {Item[]} */
   #items;
 

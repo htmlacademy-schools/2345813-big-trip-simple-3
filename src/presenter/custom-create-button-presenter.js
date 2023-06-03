@@ -1,12 +1,12 @@
-import Mode from '../enum/mode.js';
+import ModeEnum from '../enum/mode-enum.js';
 import Presenter from './presenter.js';
 
 /**
- * @template {ApplicationModel} Model
+ * @template {TripPlannerModel} Model
  * @template {HTMLButtonElement} View
  * @extends {Presenter<Model,View>}
  */
-export default class CreateButtonPresenter extends Presenter {
+export default class CustomCreateButtonPresenter extends Presenter {
   /**
    * @param {[model: Model, view: View]} args
    */
@@ -18,10 +18,10 @@ export default class CreateButtonPresenter extends Presenter {
   }
 
   onViewClick() {
-    this.model.setMode(Mode.CREATE);
+    this.model.setMode(ModeEnum.CREATE);
   }
 
   onModelMode() {
-    this.view.disabled = (this.model.getMode() === Mode.CREATE);
+    this.view.disabled = (this.model.getMode() === ModeEnum.CREATE);
   }
 }

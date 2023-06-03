@@ -1,5 +1,5 @@
-import DeleteButtonLabel from '../../enum/delete-button-label.js';
-import SaveButtonLabel from '../../enum/save-button-label.js';
+import DeleteButtonLabel from '../../enum/delete-button-label-enum.js';
+import SaveButtonLabel from '../../enum/save-button-label-enum.js';
 
 import {html} from './view.js';
 import CreatorView from './creator-view.js';
