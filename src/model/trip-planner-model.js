@@ -8,7 +8,7 @@ export default class TripPlannerModel extends Model {
   /**
    * @param {FilteredSortedCollectionModel<Point,PointAdapter>} pointsModel
    * @param {ItemCollectionModel<Destination,DestinationAdapter>} destinationsModel
-   * @param {ItemCollectionModel<OfferGroup,OfferGroupAdapter>} offerGroupsModel
+   * @param {ItemCollectionModel<OfferGroup,OffersAdapter>} offerGroupsModel
    */
   constructor(pointsModel, destinationsModel, offerGroupsModel) {
     super();

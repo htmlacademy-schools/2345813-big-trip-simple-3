@@ -1,7 +1,7 @@
 import Adapter from './adapter.js';
 import OfferAdapter from './offer-adapter.js';
 
-export default class OfferGroupAdapter extends Adapter {
+export default class OffersAdapter extends Adapter {
   /**
    * @param {OfferGroup} offerGroup
    */

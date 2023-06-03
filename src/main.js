@@ -9,7 +9,7 @@ import TripPlannerModel from './model/trip-planner-model.js';
 
 import PointAdapter from './adapter/point-adapter.js';
 import DestinationAdapter from './adapter/destination-adapter.js';
-import OfferGroupAdapter from './adapter/offer-group-adapter.js';
+import OffersAdapter from './adapter/offers-adapter.js';
 
 import FilterView from './view/js/filter-view.js';
 import SortView from './view/js/sort-view.js';
@@ -19,10 +19,10 @@ import EditorView from './view/js/editor-view.js';
 
 import CustomFilterPresenter from './presenter/custom-filter-presenter.js';
 import SortManagerPresenter from './presenter/sort-manager-presenter.js';
-import CustomListPresenter  from './presenter/custom-list-presenter.js';
+import CustomListPresenter from './presenter/custom-list-presenter.js';
 import PointEditorPresenter from './presenter/point-editor-presenter.js';
-import FilterPlaceholderPresenter  from './presenter/filter-placeholder-presenter.js';
-import CustomCreateButtonPresenter  from './presenter/custom-create-button-presenter.js';
+import FilterPlaceholderPresenter from './presenter/filter-placeholder-presenter.js';
+import CustomCreateButtonPresenter from './presenter/custom-create-button-presenter.js';
 import PointCreatorPresenter from './presenter/point-creator-presenter.js';
 
 
@@ -49,7 +49,7 @@ const pointsModel = new FilteredSortedCollectionModel(pointsStore, (item) => new
 
 const destinationsModel = new ItemCollectionModel(destinationsStore, (item) => new DestinationAdapter(item));
 
-const offerGroupsModel = new ItemCollectionModel(offerGroupsStore, (item) => new OfferGroupAdapter(item));
+const offerGroupsModel = new ItemCollectionModel(offerGroupsStore, (item) => new OffersAdapter(item));
 
 const applicationModel = new TripPlannerModel(pointsModel, destinationsModel, offerGroupsModel);
 
