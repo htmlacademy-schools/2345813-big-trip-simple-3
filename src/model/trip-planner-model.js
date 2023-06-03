@@ -1,9 +1,9 @@
-import Mode from '../enum/mode-enum.js';
-import PointType from '../enum/point-type-enum.js';
+import {ModeEnum} from '../enum/enums.js';
+import {PointTypeEnum} from '../enum/enums.js';
 import Model from './model.js';
 
 export default class TripPlannerModel extends Model {
-  #mode = Mode.VIEW;
+  #mode = ModeEnum.VIEW;
 
   /**
    * @param {FilteredSortedCollectionModel<Point,PointAdapter>} pointsModel
@@ -22,7 +22,7 @@ export default class TripPlannerModel extends Model {
   get defaultPoint() {
     const point = this.pointsModel.blank;
 
-    point.type = PointType.TAXI;
+    point.type = PointTypeEnum.TAXI;
     point.destinationId = this.destinationsModel.item(0).id;
     point.startDate = new Date().toJSON();
     point.endDate = point.startDate;
@@ -54,15 +54,15 @@ export default class TripPlannerModel extends Model {
    */
   setMode(mode, activePointId = null) {
     switch (mode) {
-      case Mode.VIEW:
+      case ModeEnum.VIEW:
         this.activePoint = null;
         break;
 
-      case Mode.EDIT:
+      case ModeEnum.EDIT:
         this.activePoint = this.pointsModel.findById(activePointId);
         break;
 
-      case Mode.CREATE:
+      case ModeEnum.CREATE:
         this.activePoint = this.defaultPoint;
         break;
 
