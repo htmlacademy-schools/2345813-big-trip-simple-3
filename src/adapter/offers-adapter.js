@@ -1,12 +1,10 @@
-import Adapter from './adapter.js';
 import OfferAdapter from './offer-adapter.js';
 
-export default class OffersAdapter extends Adapter {
+export default class OffersAdapter {
   /**
    * @param {OfferGroup} offerGroup
    */
   constructor(offerGroup) {
-    super();
 
     this.id = offerGroup.type;
     this.items = offerGroup.offers.map((offer) => new OfferAdapter(offer));

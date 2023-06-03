@@ -1,11 +1,8 @@
-import Adapter from './adapter.js';
-
-export default class PointAdapter extends Adapter {
+export default class PointAdapter {
   /**
    * @param {Partial<Point>} point
    */
   constructor(point = {}) {
-    super();
 
     this.basePrice = point.base_price;
     this.startDate = point.date_from;
@@ -18,7 +15,7 @@ export default class PointAdapter extends Adapter {
   }
 
   /**
-   * @override
+
    * @return {Partial<Point>}
    */
   toJSON() {

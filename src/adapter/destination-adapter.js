@@ -1,11 +1,8 @@
-import Adapter from './adapter.js';
-
-export default class DestinationAdapter extends Adapter {
+export default class DestinationAdapter {
   /**
    * @param {Destination} destination
    */
   constructor(destination) {
-    super();
 
     this.id = String(destination.id);
     this.description = destination.description;

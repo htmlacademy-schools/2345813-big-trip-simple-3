@@ -1,4 +1,3 @@
-/** @typedef {import('./adapter').default} Adapter */
 /** @typedef {import('./point-adapter').default} PointAdapter */
 /** @typedef {import('./destination-adapter').default} DestinationAdapter */
 /** @typedef {import('./offers-adapter').default} OffersAdapter */
