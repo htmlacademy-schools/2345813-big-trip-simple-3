@@ -1,9 +1,9 @@
-import SortTypeEnum from '../enum/sort-type-enum.js';
-import SortLabelEnum from '../enum/sort-label-enum.js';
-import SortDisabledEnum from '../enum/sort-disabled-enum.js';
+import {SortTypeEnum} from '../enum/enums.js';
+import {SortLabelEnum} from '../enum/enums.js';
+import {SortDisabledEnum} from '../enum/enums.js';
 import Presenter from './presenter.js';
-import SortCompareEnum from '../enum/sort-compare-enum.js';
-import ModeEnum from '../enum/mode-enum.js';
+import {SortCompareEnum} from '../enum/enums.js';
+import {ModeEnum} from '../enum/enums.js';
 
 /**
  * @template {TripPlannerModel} Model
@@ -43,7 +43,7 @@ export default class SortManagerPresenter extends Presenter {
 
   updateViewValue() {
     const compare = this.model.pointsModel.getSort();
-    const type = SortTypeEnum[SortCompareEnum.findKey(compare)];
+    const type = SortTypeEnum[SortCompareEnum.getKeyByValue(compare)];
 
     this.view.setValue(type);
   }
@@ -56,7 +56,7 @@ export default class SortManagerPresenter extends Presenter {
 
   handleViewChange() {
     const value = this.view.getValue();
-    const compare = SortCompareEnum[SortTypeEnum.findKey(value)];
+    const compare = SortCompareEnum[SortTypeEnum.getKeyByValue(value)];
 
     this.model.setMode(ModeEnum.VIEW);
     this.model.pointsModel.setSort(compare);

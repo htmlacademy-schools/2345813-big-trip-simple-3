@@ -1,6 +1,6 @@
-import FilterEmptyEnum from '../enum/filter-empty-enum.js';
-import FilterPredicateEnum from '../enum/filter-predicate-enum.js';
-import ModeEnum from '../enum/mode-enum.js';
+import {FilterEmptyEnum} from '../enum/enums.js';
+import {FilterPredicateEnum} from '../enum/enums.js';
+import {ModeEnum} from '../enum/enums.js';
 import Presenter from './presenter.js';
 
 /**
@@ -27,7 +27,7 @@ export default class FilterPlaceholderPresenter extends Presenter {
 
   updateView() {
     const { length } = this.model.pointsModel.list();
-    const key = FilterPredicateEnum.findKey(this.model.pointsModel.getFilter());
+    const key = FilterPredicateEnum.getKeyByValue(this.model.pointsModel.getFilter());
     const isHidden = Boolean(length) || this.model.getMode() === ModeEnum.CREATE;
 
     this.view.textContent = isHidden ? '' : FilterEmptyEnum[key];

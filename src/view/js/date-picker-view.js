@@ -1,6 +1,6 @@
 import 'flatpickr/dist/flatpickr.min.css';
 
-import KeyboardCommand from '../../enum/keyboard-command-enum.js';
+import {KeyboardCommandEnum} from '../../enum/enums.js';
 import initCalendar from 'flatpickr';
 import View, {html} from './view.js';
 
@@ -105,7 +105,7 @@ export default class DatePickerView extends View {
       return;
     }
 
-    if (KeyboardCommand.EXIT.includes(event.key) && this.isOpen) {
+    if (KeyboardCommandEnum.EXIT.includes(event.key) && this.isOpen) {
       event.stopPropagation();
 
       this.close();

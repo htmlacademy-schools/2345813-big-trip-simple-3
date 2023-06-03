@@ -1,4 +1,4 @@
-import SaveButtonLabel from '../../enum/save-button-label-enum.js';
+import {SaveButtonLabelEnum} from '../../enum/enums.js';
 import View, {html} from './view.js';
 import PointTypeSelectView from './point-type-select-view.js';
 import DestinationSelectView from './destination-select-view.js';
@@ -7,7 +7,7 @@ import PriceInputView from './price-input-view.js';
 import OfferSelectView from './offer-select-view.js';
 import DestinationView from './destination-view.js';
 import LoaderView from './loader-view.js';
-import KeyboardCommand from '../../enum/keyboard-command-enum.js';
+import {KeyboardCommandEnum} from '../../enum/enums.js';
 
 /**
  * @implements {EventListenerObject}
@@ -85,7 +85,7 @@ export default class CreatorView extends View {
   createButtonsTemplate() {
     return html`
       <button class="event__save-btn  btn  btn--blue" type="submit">
-        ${SaveButtonLabel.DEFAULT}
+        ${SaveButtonLabelEnum.DEFAULT}
       </button>
       <button class="event__reset-btn" type="reset">
         Cancel
@@ -111,7 +111,7 @@ export default class CreatorView extends View {
     /** @type {HTMLButtonElement} */
     const buttonView = this.querySelector('.event__save-btn');
 
-    buttonView.textContent = flag ? SaveButtonLabel.PRESSED : SaveButtonLabel.DEFAULT;
+    buttonView.textContent = flag ? SaveButtonLabelEnum.PRESSED : SaveButtonLabelEnum.DEFAULT;
 
     this.setLoading(flag);
   }
@@ -151,7 +151,7 @@ export default class CreatorView extends View {
    * @param {KeyboardEvent} event
    */
   handleEvent(event) {
-    if (KeyboardCommand.EXIT.includes(event.key)) {
+    if (KeyboardCommandEnum.EXIT.includes(event.key)) {
       this.close();
     }
   }

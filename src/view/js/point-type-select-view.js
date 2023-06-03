@@ -1,4 +1,4 @@
-import KeyboardCommand from '../../enum/keyboard-command-enum.js';
+import {KeyboardCommandEnum} from '../../enum/enums.js';
 import RadioGroupView, {html} from './radio-group-view.js';
 
 export default class PointTypeSelectView extends RadioGroupView {
@@ -168,7 +168,7 @@ export default class PointTypeSelectView extends RadioGroupView {
    * @param {KeyboardEvent} event
    */
   onKeyDown(event) {
-    if (KeyboardCommand.EXIT.includes(event.key) && this.toggleView.checked) {
+    if (KeyboardCommandEnum.EXIT.includes(event.key) && this.toggleView.checked) {
       event.stopPropagation();
 
       this.toggleView.checked = false;
@@ -176,7 +176,7 @@ export default class PointTypeSelectView extends RadioGroupView {
       return;
     }
 
-    if (KeyboardCommand.NEXT.includes(event.key)) {
+    if (KeyboardCommandEnum.NEXT.includes(event.key)) {
       event.preventDefault();
 
       this.setIndex(this.getIndex() + 1);
@@ -184,7 +184,7 @@ export default class PointTypeSelectView extends RadioGroupView {
       return;
     }
 
-    if (KeyboardCommand.PREVIOUS.includes(event.key)) {
+    if (KeyboardCommandEnum.PREVIOUS.includes(event.key)) {
       event.preventDefault();
 
       this.setIndex(this.getIndex() - 1);
@@ -192,7 +192,7 @@ export default class PointTypeSelectView extends RadioGroupView {
       return;
     }
 
-    if (KeyboardCommand.CONFIRM.includes(event.key)) {
+    if (KeyboardCommandEnum.CONFIRM.includes(event.key)) {
       event.preventDefault();
 
       this.toggleView.checked = false;

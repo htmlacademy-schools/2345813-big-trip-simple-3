@@ -1,4 +1,4 @@
-import KeyboardCommand from '../../enum/keyboard-command-enum';
+import {KeyboardCommandEnum} from '../../enum/enums.js';
 import View, {html} from './view.js';
 
 export default class DestinationSelectView extends View {
@@ -23,7 +23,7 @@ export default class DestinationSelectView extends View {
   }
 
   get allowedKeys() {
-    return ['Tab', ...Object.values(KeyboardCommand).flat()];
+    return ['Tab', ...Object.values(KeyboardCommandEnum).flat()];
   }
 
   /**

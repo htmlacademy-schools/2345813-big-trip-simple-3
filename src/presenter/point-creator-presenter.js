@@ -1,8 +1,8 @@
 import { escape } from 'he';
 
-import ModeEnum from '../enum/mode-enum.js';
-import PointTypeEnum from '../enum/point-type-enum.js';
-import PointLabelEnum from '../enum/point-label-enum.js';
+import { ModeEnum } from '../enum/enums.js';
+import { PointTypeEnum } from '../enum/enums.js';
+import { PointLabelEnum } from '../enum/enums.js';
 
 import Presenter from './presenter.js';
 import DatePickerView from '../view/js/date-picker-view.js';
@@ -41,13 +41,13 @@ export default class PointCreatorPresenter extends Presenter {
   }
 
   buildView() {
-    /** @type {PointTypeOptionState[]} */
     const pointTypeSelectOptions = Object.values(PointTypeEnum).map((value) => {
-      const key = PointTypeEnum.findKey(value);
+      const key = PointTypeEnum.getKeyByValue(value);
       const label = PointLabelEnum[key];
 
       return [label, value];
     });
+
 
     /** @type {DestinationOptionState[]} */
     const destinationSelectOptions = this.model.destinationsModel.listAll()
@@ -71,6 +71,7 @@ export default class PointCreatorPresenter extends Presenter {
       }]
     };
 
+    // @ts-ignore
     this.view.pointTypeSelectView.setOptions(pointTypeSelectOptions);
     this.view.destinationSelectView.setOptions(destinationSelectOptions);
     this.view.datePickerView.configure(startDateOptions, endDateOptions);
@@ -82,7 +83,7 @@ export default class PointCreatorPresenter extends Presenter {
 
   updateDestinationSelectView() {
     const { type, destinationId } = this.model.activePoint;
-    const label = PointLabelEnum[PointTypeEnum.findKey(type)];
+    const label = PointLabelEnum[PointTypeEnum.getKeyByValue(type)];
     const destination = this.model.destinationsModel.findById(destinationId);
 
     this.view.destinationSelectView
@@ -149,7 +150,7 @@ export default class PointCreatorPresenter extends Presenter {
 
   onPointTypeSelectViewChange() {
     const type = this.view.pointTypeSelectView.getValue();
-    const typeLabel = PointLabelEnum[PointTypeEnum.findKey(type)];
+    const typeLabel = PointLabelEnum[PointTypeEnum.getKeyByValue(type)];
 
     this.model.activePoint.type = type;
 

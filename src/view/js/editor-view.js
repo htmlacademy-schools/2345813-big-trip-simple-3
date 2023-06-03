@@ -1,5 +1,5 @@
-import DeleteButtonLabelEnum from '../../enum/delete-button-label-enum.js';
-import SaveButtonLabel from '../../enum/save-button-label-enum.js';
+import {DeleteButtonLabelEnum} from '../../enum/enums.js';
+import {SaveButtonLabelEnum} from '../../enum/enums.js';
 
 import {html} from './view.js';
 import CreatorView from './creator-view.js';
@@ -17,7 +17,7 @@ export default class EditorView extends CreatorView {
   createButtonsTemplate() {
     return html`
       <button class="event__save-btn  btn  btn--blue" type="submit">
-        ${SaveButtonLabel.DEFAULT}
+        ${SaveButtonLabelEnum.DEFAULT}
       </button>
       <button class="event__reset-btn" type="reset">
         ${DeleteButtonLabelEnum.DEFAULT}

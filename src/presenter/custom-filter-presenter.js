@@ -1,7 +1,7 @@
-import ModeEnum from '../enum/mode-enum.js';
-import FilterTypeEnum from '../enum/filter-type-enum.js';
-import FilterLabelEnum from '../enum/filter-label-enum.js';
-import FilterPredicateEnum from '../enum/filter-predicate-enum.js';
+import {ModeEnum} from '../enum/enums.js';
+import {FilterTypeEnum} from '../enum/enums.js';
+import {FilterLabelEnum} from '../enum/enums.js';
+import {FilterPredicateEnum} from '../enum/enums.js';
 import Presenter from './presenter.js';
 
 /**
@@ -40,7 +40,7 @@ export default class CustomFilterPresenter extends Presenter {
 
   updateViewValue() {
     const predicate = this.model.pointsModel.getFilter();
-    const type = FilterTypeEnum[FilterPredicateEnum.findKey(predicate)];
+    const type = FilterTypeEnum[FilterPredicateEnum.getKeyByValue(predicate)];
 
     this.view.setValue(type);
   }
@@ -55,7 +55,7 @@ export default class CustomFilterPresenter extends Presenter {
 
   handleViewChange() {
     const value = this.view.getValue();
-    const predicate = FilterPredicateEnum[FilterTypeEnum.findKey(value)];
+    const predicate = FilterPredicateEnum[FilterTypeEnum.getKeyByValue(value)];
 
     this.model.setMode(ModeEnum.VIEW);
     this.model.pointsModel.setFilter(predicate);

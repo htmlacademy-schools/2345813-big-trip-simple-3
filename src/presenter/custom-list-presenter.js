@@ -1,9 +1,9 @@
 import { escape } from 'he';
 import { formatDate, formatTime, formatNumber } from '../utils/format.js';
 
-import ModeEnum from '../enum/mode-enum.js';
-import PointTypeEnum from '../enum/point-type-enum.js';
-import PointLabelEnum from '../enum/point-label-enum.js';
+import {ModeEnum} from '../enum/enums.js';
+import {PointTypeEnum} from '../enum/enums.js';
+import {PointLabelEnum} from '../enum/enums.js';
 
 import Presenter from './presenter.js';
 
@@ -38,7 +38,7 @@ export default class CustomListPresenter extends Presenter {
     const states = points.map((point, index) => {
       const { startDate, endDate } = point;
       const destination = this.model.destinationsModel.findById(point.destinationId);
-      const typeLabel = PointLabelEnum[PointTypeEnum.findKey(point.type)];
+      const typeLabel = PointLabelEnum[PointTypeEnum.getKeyByValue(point.type)];
       const title = `${typeLabel} ${destination.name}`;
       const offerGroup = this.model.offerGroupsModel.findById(point.type);
 
