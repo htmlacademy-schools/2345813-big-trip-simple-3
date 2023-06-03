@@ -1,13 +1,10 @@
-import Adapter from './adapter.js';
-
-export default class DestinationAdapter extends Adapter {
+export default class DestinationAdapter {
   /**
    * @param {Destination} destination
    */
   constructor(destination) {
-    super();
 
-    this.id = destination.id;
+    this.id = String(destination.id);
     this.description = destination.description;
     this.name = destination.name;
     this.pictures = destination.pictures.map((picture) => ({...picture}));
