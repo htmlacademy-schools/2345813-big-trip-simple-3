@@ -1,5 +1,3 @@
-import '../css/view.css';
-
 /**
  * @param {TemplateStringsArray} strings
  * @param  {...*} values

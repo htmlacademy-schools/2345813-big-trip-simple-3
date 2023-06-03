@@ -1,5 +1,3 @@
-import '../css/point-view.css';
-
 import View, {html} from './view.js';
 
 export default class PointView extends View {

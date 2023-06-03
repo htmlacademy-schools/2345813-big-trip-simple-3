@@ -1,5 +1,3 @@
-import '../css/destination-select-view.css';
-
 import KeyboardCommand from '../../enum/keyboard-command-enum';
 import View, {html} from './view.js';
 

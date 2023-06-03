@@ -1,5 +1,3 @@
-import '../css/offer-select-view.css';
-
 import View, {html} from './view.js';
 
 export default class OfferSelectView extends View {

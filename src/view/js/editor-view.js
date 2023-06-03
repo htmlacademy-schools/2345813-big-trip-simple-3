@@ -1,4 +1,4 @@
-import DeleteButtonLabel from '../../enum/delete-button-label-enum.js';
+import DeleteButtonLabelEnum from '../../enum/delete-button-label-enum.js';
 import SaveButtonLabel from '../../enum/save-button-label-enum.js';
 
 import {html} from './view.js';
@@ -20,7 +20,7 @@ export default class EditorView extends CreatorView {
         ${SaveButtonLabel.DEFAULT}
       </button>
       <button class="event__reset-btn" type="reset">
-        ${DeleteButtonLabel.DEFAULT}
+        ${DeleteButtonLabelEnum.DEFAULT}
       </button>
       <button class="event__rollup-btn" type="button">
         <span class="visually-hidden">Open event</span>
@@ -47,7 +47,7 @@ export default class EditorView extends CreatorView {
     /** @type {HTMLButtonElement} */
     const buttonView = this.querySelector('.event__reset-btn');
 
-    buttonView.textContent = flag ? DeleteButtonLabel.PRESSED : DeleteButtonLabel.DEFAULT;
+    buttonView.textContent = flag ? DeleteButtonLabelEnum.PRESSED : DeleteButtonLabelEnum.DEFAULT;
 
     this.setLoading(flag);
   }
