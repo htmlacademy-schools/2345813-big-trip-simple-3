@@ -1,4 +1,4 @@
-import {KeyboardCommandEnum} from '../../enum/enums.js';
+import {KeyboardCommandEnum} from '../../utils/enums.js';
 import View, {html} from './view.js';
 
 export default class DestinationSelectView extends View {

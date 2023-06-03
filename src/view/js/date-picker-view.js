@@ -1,6 +1,6 @@
 import 'flatpickr/dist/flatpickr.min.css';
 
-import {KeyboardCommandEnum} from '../../enum/enums.js';
+import {KeyboardCommandEnum} from '../../utils/enums.js';
 import initCalendar from 'flatpickr';
 import View, {html} from './view.js';
 

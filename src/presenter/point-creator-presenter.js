@@ -1,8 +1,8 @@
 import { escape } from 'he';
 
-import { ModeEnum } from '../enum/enums.js';
-import { PointTypeEnum } from '../enum/enums.js';
-import { PointLabelEnum } from '../enum/enums.js';
+import { ModeEnum } from '../utils/enums.js';
+import { PointTypeEnum } from '../utils/enums.js';
+import { PointLabelEnum } from '../utils/enums.js';
 
 import Presenter from './presenter.js';
 import DatePickerView from '../view/js/date-picker-view.js';

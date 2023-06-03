@@ -1,4 +1,4 @@
-import {ModeEnum} from '../enum/enums.js';
+import {ModeEnum} from '../utils/enums.js';
 import Presenter from './presenter.js';
 
 /**

@@ -1,4 +1,4 @@
-import {ModeEnum} from '../enum/enums.js';
+import {ModeEnum} from '../utils/enums.js';
 import PointCreatorPresenter from './point-creator-presenter.js';
 import PointView from '../view/js/point-view.js';
 

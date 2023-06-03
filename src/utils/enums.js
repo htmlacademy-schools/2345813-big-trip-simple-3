@@ -13,9 +13,6 @@ export const FilterLabelEnum = {
 export const FilterTypeEnum = {
   EVERYTHING: 'everything',
   FUTURE: 'future',
-  getKeyByValue: function(value) {
-    return Object.keys(this).find((key) => this[key] === value);
-  }
 };
 export const KeyboardCommandEnum = {
   EXIT: ['Escape', 'Esc'],
@@ -77,52 +74,20 @@ export const SortTypeEnum = {
   TIME: 'time',
   PRICE: 'price',
   OFFER: 'offer',
-  getKeyByValue: function(value) {
-    return Object.keys(this).find((key) => this[key] === value);
-  }
 };
 
-/**
- * @template Item
- * @typedef {(item: Item) => boolean} Predicate
- */
 
-/**
- * @template Item
- * @typedef {(item: Item, nextItem: Item) => number} Compare
- */
+export const FilterPredicateEnum = {
+  EVERYTHING: () => true,
+  FUTURE: function(point) {
+    return Date.parse(point.endDate) > Date.now();
+  },
+};
 
 
-class Enum {
-  /**
-   * @param {*} value
-   */
-  static getKeyByValue(value) {
-    return Object.keys(this).find((key) => this[key] === value);
-  }
-}
+export const SortCompareEnum = {
+  DAY: (point, nextPoint) =>
+    Date.parse(point.startDate) - Date.parse(nextPoint.startDate),
+  PRICE: (point, nextPoint) => nextPoint.basePrice - point.basePrice,
+};
 
-export class FilterPredicateEnum extends Enum {
-  /**
-   * @type {Predicate<PointAdapter>}
-   */
-  static EVERYTHING = () => true;
-
-  /**
-   * @type {Predicate<PointAdapter>}
-   */
-  static FUTURE = (point) => Date.parse(point.endDate) > Date.now();
-}
-
-export class SortCompareEnum extends Enum {
-  /**
-   * @type {Compare<PointAdapter>}
-   */
-  static DAY = (point, nextPoint) =>
-    Date.parse(point.startDate) - Date.parse(nextPoint.startDate);
-
-  /**
-   * @type {Compare<PointAdapter>}
-   */
-  static PRICE = (point, nextPoint) => nextPoint.basePrice - point.basePrice;
-}

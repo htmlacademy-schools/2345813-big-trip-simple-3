@@ -1,5 +1,5 @@
-import {DeleteButtonLabelEnum} from '../../enum/enums.js';
-import {SaveButtonLabelEnum} from '../../enum/enums.js';
+import {DeleteButtonLabelEnum} from '../../utils/enums.js';
+import {SaveButtonLabelEnum} from '../../utils/enums.js';
 
 import {html} from './view.js';
 import CreatorView from './creator-view.js';

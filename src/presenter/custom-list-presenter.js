@@ -1,9 +1,9 @@
 import { escape } from 'he';
-import { formatDate, formatTime, formatNumber } from '../utils/format.js';
+import { formatDate, formatTime, formatNumber } from '../utils/formats.js';
 
-import {ModeEnum} from '../enum/enums.js';
-import {PointTypeEnum} from '../enum/enums.js';
-import {PointLabelEnum} from '../enum/enums.js';
+import {ModeEnum} from '../utils/enums.js';
+import {PointTypeEnum} from '../utils/enums.js';
+import {PointLabelEnum} from '../utils/enums.js';
 
 import Presenter from './presenter.js';
 

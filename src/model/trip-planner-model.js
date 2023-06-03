@@ -1,5 +1,5 @@
-import {ModeEnum} from '../enum/enums.js';
-import {PointTypeEnum} from '../enum/enums.js';
+import {ModeEnum} from '../utils/enums.js';
+import {PointTypeEnum} from '../utils/enums.js';
 import Model from './model.js';
 
 export default class TripPlannerModel extends Model {

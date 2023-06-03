@@ -1,4 +1,4 @@
-import {SaveButtonLabelEnum} from '../../enum/enums.js';
+import {SaveButtonLabelEnum} from '../../utils/enums.js';
 import View, {html} from './view.js';
 import PointTypeSelectView from './point-type-select-view.js';
 import DestinationSelectView from './destination-select-view.js';
@@ -7,7 +7,7 @@ import PriceInputView from './price-input-view.js';
 import OfferSelectView from './offer-select-view.js';
 import DestinationView from './destination-view.js';
 import LoaderView from './loader-view.js';
-import {KeyboardCommandEnum} from '../../enum/enums.js';
+import {KeyboardCommandEnum} from '../../utils/enums.js';
 
 /**
  * @implements {EventListenerObject}
