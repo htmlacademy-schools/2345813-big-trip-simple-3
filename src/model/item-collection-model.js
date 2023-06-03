@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Model from './model.js';
 
 /**

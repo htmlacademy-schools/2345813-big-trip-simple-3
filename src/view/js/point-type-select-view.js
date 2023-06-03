@@ -1,7 +1,35 @@
 import {KeyboardCommandEnum} from '../../utils/enums.js';
-import RadioGroupView, {html} from './radio-group-view.js';
+import View, {html} from './view.js';
 
-export default class PointTypeSelectView extends RadioGroupView {
+export default class PointTypeSelectView extends View {
+  get inputSelector() {
+    return '[type="radio"]';
+  }
+
+  /**
+   * @type {NodeListOf<HTMLInputElement>}
+   */
+  get inputViews() {
+    return this.querySelectorAll(this.inputSelector);
+  }
+
+
+  getIndex() {
+    return [...this.inputViews].findIndex((view) => view.checked);
+  }
+
+
+  /**
+   * @param {boolean[]} flags
+   */
+  setOptionsDisabled(flags) {
+    this.inputViews.forEach((view, index) => {
+      view.disabled = flags[index];
+    });
+
+    return this;
+  }
+
   constructor() {
     super(...arguments);
 
@@ -18,9 +46,7 @@ export default class PointTypeSelectView extends RadioGroupView {
     this.addEventListener('keydown', this.onKeyDown);
   }
 
-  /**
-   * @override
-   */
+
   getValue() {
     /** @type {HTMLInputElement} */
     const checkedInputView = this.querySelector('[type="radio"]:checked');
@@ -29,22 +55,33 @@ export default class PointTypeSelectView extends RadioGroupView {
   }
 
   /**
-   * @override
    * @param {string} type
    */
   setValue(type) {
-    super.setValue(type);
+    const inputView = this.querySelector(`${this.inputSelector}[value="${type}"]`);
+
+    if (inputView) {
+      // @ts-ignore
+      inputView.checked = true;
+    }
+
+
     this.setIcon(type);
 
     return this;
   }
 
   /**
-   * @override
    * @param {number} index
    */
   setIndex(index) {
-    super.setIndex(index);
+    const views = this.inputViews;
+    const rangeIndex = (views.length + index) % views.length;
+
+    views.item(rangeIndex).checked = true;
+
+    views.item(rangeIndex).dispatchEvent(new Event('change', { bubbles: true }));
+
     this.setIcon(this.getValue());
 
     return this;
