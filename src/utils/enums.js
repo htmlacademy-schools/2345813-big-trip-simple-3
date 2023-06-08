@@ -46,9 +46,6 @@ export const PointTypeEnum = {
   CHECK_IN: 'check-in',
   SIGHTSEEING: 'sightseeing',
   RESTAURANT: 'restaurant',
-  getKeyByValue: function(value) {
-    return Object.keys(this).find((key) => this[key] === value);
-  }
 };
 export const SaveButtonLabelEnum = {
   DEFAULT: 'Save',

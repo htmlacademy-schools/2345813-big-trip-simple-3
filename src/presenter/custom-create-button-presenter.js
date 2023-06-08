@@ -14,14 +14,14 @@ export default class CustomCreateButtonPresenter extends Presenter {
     super(...args);
 
     this.view.addEventListener('click', this.onViewClick.bind(this));
-    this.model.addEventListener('mode', this.onModelMode.bind(this));
+    this.model.addEventListener('mode', this.onModelModeChange.bind(this));
   }
 
   onViewClick() {
     this.model.setMode(ModeEnum.CREATE);
   }
 
-  onModelMode() {
+  onModelModeChange() {
     this.view.disabled = (this.model.getMode() === ModeEnum.CREATE);
   }
 }

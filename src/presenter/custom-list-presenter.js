@@ -38,7 +38,7 @@ export default class CustomListPresenter extends Presenter {
     const states = points.map((point, index) => {
       const { startDate, endDate } = point;
       const destination = this.model.destinationsModel.findById(point.destinationId);
-      const typeLabel = PointLabelEnum[PointTypeEnum.getKeyByValue(point.type)];
+      const typeLabel = PointLabelEnum[Object.keys(PointTypeEnum).find((key) => PointTypeEnum[key] === point.type)];
       const title = `${typeLabel} ${destination.name}`;
       const offerGroup = this.model.offerGroupsModel.findById(point.type);
 
